@@ -11,11 +11,9 @@ const util = require('./route_handlers/util')
 const session = require('express-session')
 const todos = require('./route_handlers/todos')
 const chess = require('./route_handlers/lichess')
-const cookie = require('cookie-parser')
 
 let app = express()
 app.use(files.static())
-app.use(cookie())
 app.use(session({resave: false, saveUninitialized: false,
   secret: config.session_secret}))
 app.use(passport.initialize())
@@ -25,6 +23,7 @@ app.use(passport.session())
 // }
 app.use(body_parser.urlencoded({extended: false}))
 app.use(body_parser.json())
+app.post('/signup', user.sign_up)
 app.get('/', auth.require_auth({otherwise: '/login'}),
   util.redirect('/lists'))
 app.get('/login', auth.require_no_auth({otherwise: '/'}),
