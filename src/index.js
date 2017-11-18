@@ -11,9 +11,11 @@ const util = require('./route_handlers/util')
 const session = require('express-session')
 const todos = require('./route_handlers/todos')
 const chess = require('./route_handlers/lichess')
+const cookie = require('cookie-parser')
 
 let app = express()
 app.use(files.static())
+app.use(cookie())
 app.use(session({resave: false, saveUninitialized: false,
   secret: config.session_secret}))
 app.use(passport.initialize())
