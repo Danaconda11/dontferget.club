@@ -7,7 +7,7 @@ let create_dummy_records = () => {
       return db.collection('test').insertOne({title : 'test', completed : false})
     }).then(() => {
       return db.collection('users').update({username: 'josh'},
-        {$set: {username: 'josh'}}, {upsert: true})
+        {$set: {email: 'joshwillik@gmail.com'}}, {upsert: true})
     })
   })
 }
