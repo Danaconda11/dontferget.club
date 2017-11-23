@@ -6,7 +6,7 @@
   "scripts": {
     "start": "concurrently \"nodemon index --ignore 'public/**'\" \"npm run build:js\"",
     "build:js": "webpack -dw",
-    "build:production": "webpack -p",
+    "build:production": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
