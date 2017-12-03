@@ -2,6 +2,7 @@
 set -ue
 eval $(docker-machine env -u)
 docker rm -f devmongo || :
+docker rm -f www.dontferget.club || :
 docker run -d --name devmongo mongo
 docker run -it --name www.dontferget.club \
   --link devmongo:mongohost \
@@ -14,4 +15,5 @@ docker run -it --name www.dontferget.club \
   -w /app \
   -v $PWD/src:/app \
   -p 80:80 \
+  -p 9229:9229 \
   node:9.2 npm start

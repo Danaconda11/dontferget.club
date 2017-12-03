@@ -22,11 +22,8 @@ E.sign_up = async (req, res, next) => {
     return res.status(400).send('bad password')
   }
   let hash = await bcrypt.hash(pass, 5)
-  let user_insert = {
-    email,
-    password: hash
-  }
-  let new_user = await users.create({ user_insert })
+  console.log(hash)
+  let new_user = await users.create({ email, password:hash })
   req.login(new_user, err =>  {
     if (err) { 
       return next(err) 

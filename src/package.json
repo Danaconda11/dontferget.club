@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"nodemon index --ignore 'public/**'\" \"npm run build:js\"",
+    "start": "concurrently \"nodemon --inspect=0.0.0.0 index --ignore 'public/**'\" \"npm run build:js\"",
     "build:js": "webpack -dw",
     "build:production": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -22,6 +22,7 @@
     "lodash": "^4.17.4",
     "mongodb": "^2.2.30",
     "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
     "passport-wunderlist": "^1.0.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
