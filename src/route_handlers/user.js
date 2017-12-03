@@ -10,9 +10,7 @@ let E = module.exports
 
 E.sign_up = async (req, res, next) => {
   let email = req.body.username
-  //add password
-
-
+  let pass = req.body.password 
   if (!email) {
     return res.status(400).send('bad email address')
   }
@@ -20,7 +18,15 @@ E.sign_up = async (req, res, next) => {
   if (user) {
     return res.status(403).send('account already exists')
   }
-  let new_user = await users.create({ email })
+  if (!pass) {
+    return res.status(400).send('bad password')
+  }
+  let hash = await bcrypt.hash(pass, 5)
+  let user_insert = {
+    email,
+    password: hash
+  }
+  let new_user = await users.create({ user_insert })
   req.login(new_user, err =>  {
     if (err) { 
       return next(err) 
