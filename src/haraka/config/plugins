@@ -12,13 +12,6 @@ early_talker
 # Only accept mail where the MAIL FROM domain is resolvable to an MX record
 # mail_from.is_resolvable
 # spf
-dontferget.user_email
-# RCPT TO
-# At least one rcpt_to plugin is REQUIRED for inbound email. The simplest
-# plugin is in_host_list, see 'haraka -h rcpt_to.in_host_list' to configure.
-rcpt_to.in_host_list
-# Check mail headers are valid
 data.headers
-# QUEUE
-dontferget.submit_todo
 max_unrecognized_commands
+dontferget.submit_todos
