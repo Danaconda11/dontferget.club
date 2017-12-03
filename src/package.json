@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"nodemon index --ignore 'public/**'\" \"npm run build:js\"",
+    "start": "concurrently \"nodemon --inspect=0.0.0.0 index --ignore 'public/**'\" \"npm run build:js\"",
     "build:js": "webpack -dw",
     "build:production": "webpack",
     "haraka": "haraka -c haraka",
@@ -15,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "Haraka": "^2.8.16",
+    "bcrypt": "^1.0.3",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "express-session": "^1.15.3",
@@ -23,6 +24,7 @@
     "lodash": "^4.17.4",
     "mongodb": "^2.2.30",
     "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
     "passport-wunderlist": "^1.0.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
