@@ -1,0 +1,16 @@
+#!/bin/bash
+set -ue
+container_name=www.dontferget.club-haraka
+image_name=dontferget-haraka-wisp
+echo deploying haraka
+eval $(docker-machine env www.dontferget.club)
+docker build -t $image_name -f config/haraka.dockerfile .
+docker rm -f $container_name || :
+# HACK josh: Mongo connection details are hard coded in haraka plugins.
+# They should be passed with config options
+docker run -d \
+  --restart always \
+  -p 25:25 \
+  --name $container_name \
+  $image_name
+echo done

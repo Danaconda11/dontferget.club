@@ -1,0 +1,17 @@
+# To see a list of all plugins, run 'haraka -l'
+# To see the help docs for a particular plugin, run 'haraka -h plugin.name'
+process_title
+# CONNECT
+# fcrdns
+# dnsbl
+# HELO
+early_talker
+# see config/helo.checks.ini for configuration
+# helo.checks
+# MAIL FROM
+# Only accept mail where the MAIL FROM domain is resolvable to an MX record
+# mail_from.is_resolvable
+# spf
+data.headers
+max_unrecognized_commands
+dontferget.submit_todos
