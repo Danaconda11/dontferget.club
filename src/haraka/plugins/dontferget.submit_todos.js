@@ -1,6 +1,6 @@
 let config = require('../../config.js')
 // HACK josh: read this from some proper config
-config.mongo_host = '172.17.0.2'
+config.mongo_host = '10.99.0.10'
 config.mongo_database = 'todo'
 let users = require('../../users.js')
 let todo_queue = require('../../todo_queue.js')

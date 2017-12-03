@@ -7,12 +7,14 @@
     "start": "concurrently \"nodemon index --ignore 'public/**'\" \"npm run build:js\"",
     "build:js": "webpack -dw",
     "build:production": "webpack",
+    "haraka": "haraka -c haraka",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "Haraka": "^2.8.16",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "express-session": "^1.15.3",

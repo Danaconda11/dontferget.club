@@ -2,9 +2,9 @@
 set -ue
 container_name=www.dontferget.club
 image_name=dontferget-wisp
-echo deploying
+echo deploying webserver
 eval $(docker-machine env www.dontferget.club)
-docker build -t $image_name .
+docker build -t $image_name -f ./config/webserver.dockerfile .
 docker rm -f $container_name || :
 docker run -d \
   --restart always \
