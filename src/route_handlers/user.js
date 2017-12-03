@@ -8,6 +8,9 @@ let E = module.exports
 
 E.sign_up = async (req, res, next) => {
   let email = req.body.username
+  //add password
+  console.log('sign-up body', req.body) 
+
   if (!email) {
     return res.status(400).send('bad email address')
   }
