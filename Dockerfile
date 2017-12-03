@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:9.2
 ADD src /app
 WORKDIR /app
 RUN npm install && npm run build:production

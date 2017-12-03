@@ -3,7 +3,7 @@ set -ue
 eval $(docker-machine env -u)
 docker rm -f devmongo || :
 docker run -d --name devmongo mongo
-docker run -it \
+docker run -it --name www.dontferget.club \
   --link devmongo:mongohost \
   -e MONGO_HOST=mongohost \
   -e MONGO_DATABASE=todo \
@@ -14,4 +14,4 @@ docker run -it \
   -w /app \
   -v $PWD/src:/app \
   -p 80:80 \
-  node npm start
+  node:9.2 npm start
