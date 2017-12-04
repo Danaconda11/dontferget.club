@@ -12,6 +12,8 @@ let create_dummy_records = () => {
   })
 }
 
-module.exports = () => {
-  return create_dummy_records()
+module.exports = async () => {
+  if (config.debug) {
+    await create_dummy_records()
+  }
 }

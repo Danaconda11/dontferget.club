@@ -51,8 +51,4 @@ app.get('/games/chess', files.send_file('index.html'))
 app.get('/api/lichess', chess.fetch_user)
 app.listen(config.http_port,
   () => console.log(`Listening on 0.0.0.0:${config.http_port}`))
-if (config.debug) {
-  init().catch(err => {
-    console.error(err)
-  })
-}
+init().catch(err => console.error(err))
