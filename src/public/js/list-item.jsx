@@ -69,9 +69,8 @@ export default class ListItem extends Component {
           <input ref="edit_todo_title" onBlur={this.save_title}
             onKeyDown={this.cancel_edit}
             defaultValue={todo.title}/>}
-        {todo.list &&
-          <Link to={`/lists/${todo.list._id}`} className="button list_link">
-            {todo.list.title}</Link>}
+        {(todo.list||[]).map(l =>
+          <Link key={l} to={`/lists/${l}`} className="button list_link">{l}</Link>)}
       </li>
     )
   }
