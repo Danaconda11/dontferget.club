@@ -22,6 +22,7 @@
     "express-static": "^1.2.4",
     "lichess-api": "^1.0.2",
     "lodash": "^4.17.4",
+    "mailparser": "^2.1.0",
     "mongodb": "^2.2.30",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",

@@ -1,5 +1,6 @@
 const mongo = require('./mongo')
 const config = require('./config')
+const todo_queue = require('./todo_queue')
 
 let create_dummy_records = () => {
   return mongo.connect().then(db => {
@@ -13,7 +14,12 @@ let create_dummy_records = () => {
 }
 
 module.exports = async () => {
-  if (config.debug) {
+  // HACK josh: disabling automatic account creation for now
+  if (false && config.debug) {
     await create_dummy_records()
   }
+  // TODO josh: we should have a centralized logger that reports errors
+  todo_queue.watch().on('error', e => {
+    console.error(e)
+  })
 }
