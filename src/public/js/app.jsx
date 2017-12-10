@@ -1,15 +1,18 @@
 import React, { Component } from 'react'
 import ListItem from './list-item.jsx'
 import api_request from './api.js'
+import * as qs from 'query-string';
 
 export default class App extends Component {
   constructor(props) {
     super(props)
     this.state = { todos: [] }
+    this.done = this.props.location.query    
     this.get_todos = this.get_todos.bind(this)
     this.on_change = this.on_change.bind(this)
     this.on_submit = this.on_submit.bind(this)
     this.todo_modified = this.todo_modified.bind(this)
+    console.log(this.props)
   }
   get_todos() {
     api_request('/todos')
@@ -47,32 +50,33 @@ export default class App extends Component {
   }
   render() {
     let [completed, in_progress] = _.partition(this.state.todos, todo => todo.completed)
+    let {done} = qs.parse(this.props.location.search)
+    
     return (
       <div>
-        <h1>To do</h1>
         <form onSubmit={this.on_submit} className="new_todo">
           <input ref='todo_input' placeholder='Add a todo'
             onChange={this.on_change} autoFocus={true} />
           <button className="primary">&#43;</button>
         </form>
-        <ul className="todo_items">
+
+        {!done && <ul className="todo_items">
           {in_progress.map(todo =>
             <ListItem
               modified={this.todo_modified}
               key={todo._id}
               disabled={todo.completed}
               todo={todo} />)}
-        </ul>
+        </ul>}
 
-        <h1>Done</h1>
-        <ul className="todo_items completed_todos">
+        { done && <ul className="todo_items completed_todos">
           {completed.map(todo =>
             <ListItem
               modified={this.todo_modified}
               key={todo._id}
               disabled={todo.completed}
               todo={todo} />)}
-        </ul>
+        </ul>}
       </div>
     )
   }
