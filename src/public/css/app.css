@@ -1,3 +1,4 @@
+h1, h2, h3, h4, h5, h6 { margin: 0.75rem 0; }
 .clickable { cursor: pointer; }
 .app { max-width: 900px; padding: 0 1em; margin: 0 auto; }
 .nav_link, .nav_link:visited {
@@ -18,13 +19,15 @@
   background: inherit;
   margin: 0;
 }
+.new_todo input { margin-left: 0; }
 .todo_items { padding: 0; margin: 0 0 1em 0; }
 .todo_item {
   display: flex;
   list-style: none;
-  padding: 1em;
+  padding: 1em 0;
   border-bottom: 1px solid #ccc;
 }
+.todo_item a { text-decoration: none; color: #111; }
 .todo_item input:not([type]) { margin: 0; padding: 0; border: 0; }
 .todo_item.completed span { color: #999; text-decoration: line-through; }
 a.list_link, a.list_link:hover, a.list_link:visited {
