@@ -20,9 +20,9 @@ app.use(session({
 }))
 app.use(passport.initialize())
 app.use(passport.session())
-// if (config.auto_login) {
-//   app.use(util.auto_login)
-// }
+if (config.auto_login) {
+  app.use(util.auto_login)
+}
 app.use(body_parser.urlencoded({ extended: false }))
 app.use(body_parser.json())
 app.post('/signup', user.sign_up)
