@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import {Route} from 'react-router-dom'
 import SideBar from './sidebar.jsx'
 import ListItem from './list-item.jsx'
+import TodoEditor from './todo-editor.jsx'
 import api_request from './api.js'
-import * as qs from 'query-string';
+import qs from 'query-string';
 
 export default class Todos extends Component {
   constructor(props) {
@@ -14,7 +15,6 @@ export default class Todos extends Component {
     this.on_change = this.on_change.bind(this)
     this.on_submit = this.on_submit.bind(this)
     this.todo_modified = this.todo_modified.bind(this)
-    console.log(this.props)
   }
   get_todos() {
     api_request('/todos')
@@ -53,7 +53,6 @@ export default class Todos extends Component {
   render() {
     let [completed, in_progress] = _.partition(this.state.todos, todo => todo.completed)
     let {done} = qs.parse(this.props.location.search)
-
     return (
       <div className="row">
         <div className="col-sm-2">
@@ -73,18 +72,18 @@ export default class Todos extends Component {
                 disabled={todo.completed}
                 todo={todo} />)}
           </ul>}
-          { done && <ul className="todo_items completed_todos">
+          {done && <ul className="todo_items completed_todos">
             {completed.map(todo =>
               <ListItem
                 modified={this.todo_modified}
                 key={todo._id}
                 disabled={todo.completed}
-                todo={todo} />)}
+                todo={todo}/>)}
           </ul>}
         </div>
-        <Route path="/todos/:todo" render={() =>
+        <Route path="/todos/:todo" render={({match}) =>
           <div className="col-md-4">
-            Specific todo
+            <TodoEditor todo={match.params.todo} />
           </div>}/>
       </div>
     )

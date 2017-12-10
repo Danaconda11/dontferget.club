@@ -11,6 +11,14 @@ E.add = util.try_catch(async (req, res, next) => {
   return res.status(201).json(todo)
 })
 
+E.get = util.try_catch(async (req, res, next) => {
+  let todo = await todos.find_by_id(req.params.id)
+  if (!todo) {
+    return res.status(404).json(null)
+  }
+  res.json(todo)
+})
+
 E.get_all = util.try_catch(async (req, res, next) => {
   let items = await todos.find_all({ user_id: req.user._id })
   return res.json(items)
@@ -22,6 +30,7 @@ E.update = (req, res, next) => {
   if (!id || _.isEmpty(update)) {
     return res.status(400).json({ error: 'Invalid update' })
   }
+  // TODO josh: whitelist update keys, keys like 'user_id' should not be changable
   return todos.update(id, update).then(result => {
     return todos.find_by_id(id)
   }).then(todo => {
