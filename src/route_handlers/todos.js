@@ -3,7 +3,7 @@ const todos = require('../todos')
 const util = require('./util.js')
 E = module.exports
 
-E.add = util.try_catch(async (req, res, next) => {
+E.add = util.http_handler(async (req, res, next) => {
   let todo = req.body
   todo.user_id = req.user._id
   let insert = await todos.insert(todo)
@@ -11,7 +11,7 @@ E.add = util.try_catch(async (req, res, next) => {
   return res.status(201).json(todo)
 })
 
-E.get = util.try_catch(async (req, res, next) => {
+E.get = util.http_handler(async (req, res, next) => {
   let todo = await todos.find_by_id(req.params.id)
   if (!todo) {
     return res.status(404).json(null)
@@ -19,7 +19,7 @@ E.get = util.try_catch(async (req, res, next) => {
   res.json(todo)
 })
 
-E.get_all = util.try_catch(async (req, res, next) => {
+E.get_all = util.http_handler(async (req, res, next) => {
   let items = await todos.find_all({ user_id: req.user._id })
   return res.json(items)
 })

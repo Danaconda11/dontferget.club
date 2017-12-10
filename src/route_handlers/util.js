@@ -6,7 +6,7 @@ E.redirect = path => {
   return (req, res) => res.redirect(path)
 }
 
-E.try_catch = fn => {
+E.http_handler = fn => {
   return async (req, res, next) => {
     try {
       await fn(req, res,  next)
