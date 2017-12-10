@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
+import {Route} from 'react-router-dom'
+import SideBar from './sidebar.jsx'
 import ListItem from './list-item.jsx'
 import api_request from './api.js'
 
-export default class App extends Component {
+export default class Todos extends Component {
   constructor(props) {
     super(props)
     this.state = { todos: [] }
@@ -48,31 +50,38 @@ export default class App extends Component {
   render() {
     let [completed, in_progress] = _.partition(this.state.todos, todo => todo.completed)
     return (
-      <div>
-        <h1>To do</h1>
-        <form onSubmit={this.on_submit} className="new_todo">
-          <input ref='todo_input' placeholder='Add a todo'
-            onChange={this.on_change} autoFocus={true} />
-          <button className="primary">&#43;</button>
-        </form>
-        <ul className="todo_items">
-          {in_progress.map(todo =>
-            <ListItem
-              modified={this.todo_modified}
-              key={todo._id}
-              disabled={todo.completed}
-              todo={todo} />)}
-        </ul>
-
-        <h1>Done</h1>
-        <ul className="todo_items completed_todos">
-          {completed.map(todo =>
-            <ListItem
-              modified={this.todo_modified}
-              key={todo._id}
-              disabled={todo.completed}
-              todo={todo} />)}
-        </ul>
+      <div className="row">
+        <div className="col-sm-2">
+          <SideBar/>
+        </div>
+        <div className="col-sm">
+          <form onSubmit={this.on_submit} className="new_todo">
+            <input ref='todo_input' placeholder='Add a todo'
+              onChange={this.on_change} autoFocus={true} />
+            <button className="primary">&#43;</button>
+          </form>
+          <ul className="todo_items">
+            {in_progress.map(todo =>
+              <ListItem
+                modified={this.todo_modified}
+                key={todo._id}
+                disabled={todo.completed}
+                todo={todo} />)}
+          </ul>
+          <h5>Done</h5>
+          <ul className="todo_items completed_todos">
+            {completed.map(todo =>
+              <ListItem
+                modified={this.todo_modified}
+                key={todo._id}
+                disabled={todo.completed}
+                todo={todo} />)}
+          </ul>
+        </div>
+        <Route path="/todos/:todo" render={() =>
+          <div className="col-md-4">
+            Specific todo
+          </div>}/>
       </div>
     )
   }

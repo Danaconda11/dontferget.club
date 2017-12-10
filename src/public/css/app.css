@@ -1,6 +1,7 @@
-h1, h2, h3, h4, h5, h6 { margin: 0.75rem 0; }
+h1, h2, h3, h4, h5, h6 { margin: 0 0 0.75rem 0; }
 .clickable { cursor: pointer; }
-.app { max-width: 900px; padding: 0 1em; margin: 0 auto; }
+.app { padding: 0 1em; margin-left: 0; }
+.navbar { margin-bottom: 0.5em; }
 .nav_link, .nav_link:visited {
   display: inline-block;
   padding: 0.5em;
@@ -12,6 +13,23 @@ h1, h2, h3, h4, h5, h6 { margin: 0.75rem 0; }
   transition: none;
   opacity: 1;
 }
+.sidebar {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 0.5em;;
+}
+.sidebar .list {
+  display: block;
+  margin-bottom: 0.25em;
+  text-decoration: none;
+  background: #ddd;
+  border-radius: 5px;
+  padding: 0.25em 0.5em;
+  color: #111;
+}
+.sidebar .list.active {
+  background: #ccc;
+}
 .new_todo {
   display: inline-flex;
   padding: 0;
@@ -20,7 +38,7 @@ h1, h2, h3, h4, h5, h6 { margin: 0.75rem 0; }
   margin: 0;
 }
 .new_todo input { margin-left: 0; }
-.todo_items { padding: 0; margin: 0 0 1em 0; }
+.todo_items { padding: 0; margin: 0 0 2em 0; }
 .todo_item {
   display: flex;
   list-style: none;

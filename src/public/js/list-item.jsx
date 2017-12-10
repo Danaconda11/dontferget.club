@@ -55,7 +55,6 @@ export default class ListItem extends Component {
       return todo
     }
     let check_id = 'completed-' + todo._id
-    let edit_mode = this.state.edit
     return (
       <li className={'todo_item' + (todo.completed ? ' completed' : '')}>
         <span className="input-group">
@@ -66,12 +65,7 @@ export default class ListItem extends Component {
             onChange={this.toggle_button} />
           <label htmlFor={check_id} />
         </span>
-        {!edit_mode && <span className="clickable" onClick={this.edit_title}>
-          {todo.title}</span>}
-        {edit_mode &&
-          <input ref="edit_todo_title" onBlur={this.save_title}
-            onKeyDown={this.cancel_edit}
-            defaultValue={todo.title}/>}
+        <Link to={`/todos/${todo._id}`}>{todo.title}</Link>
         {(todo.list||[]).map(l =>
           <Link key={l} to={`/lists/${l}`} className="button list_link">{l}</Link>)}
       </li>
