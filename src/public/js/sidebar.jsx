@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {NavLink} from 'react-router-dom'
+import {NavLink, Link} from 'react-router-dom'
 import api from './api.js'
 
 export default class SideBar extends Component {
@@ -16,6 +16,9 @@ export default class SideBar extends Component {
           <NavLink key={list}
             to={list === 'Inbox' ? '/' : `/list/${list.toLowerCase()}`}
             className="list">{list}</NavLink>)}
+        <Link to="/list/new" className="new_list">
+          <i className="fa fa-plus"/>
+        </Link>
       </div>
     )
   }
