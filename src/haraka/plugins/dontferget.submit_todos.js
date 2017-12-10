@@ -4,6 +4,7 @@ let users = require('../../users.js')
 let todo_queue = require('../../todo_queue.js')
 
 exports.register = function () {
+  // HACK josh: don't do this
   config.mongo_host = this.config.get('dontferget.ini').main.mongo_host
 }
 
