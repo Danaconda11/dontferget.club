@@ -65,9 +65,10 @@ export default class ListItem extends Component {
             onChange={this.toggle_button} />
           <label htmlFor={check_id} />
         </span>
-        <Link to={`/todos/${todo._id}`}>{todo.title}</Link>
+        <Link to={`/todo/${todo._id}`}>{todo.title}</Link>
         {(todo.list||[]).map(l =>
-          <Link key={l} to={`/lists/${l}`} className="button list_link">{l}</Link>)}
+          <Link key={l} to={`/list/${l.toLowerCase()}`}
+            className="button list_link">{l}</Link>)}
       </li>
     )
   }

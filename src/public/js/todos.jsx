@@ -81,7 +81,7 @@ export default class Todos extends Component {
                 todo={todo}/>)}
           </ul>}
         </div>
-        <Route path="/todos/:todo" render={({match}) =>
+        <Route path="/todo/:todo" render={({match}) =>
           <div className="col-md-4">
             <TodoEditor todo={match.params.todo} />
           </div>}/>

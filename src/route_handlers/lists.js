@@ -3,6 +3,7 @@ const users = require('../users')
 const Wunderlist = require('wunderlist')
 const config = require('../config')
 const _ = require('lodash')
+const util = require('./util')
 let E = module.exports
 
 // wunderlist api "promises" don't behave like real promises should
@@ -97,9 +98,11 @@ E.import = (req, res, next) => mongo.connect().then(db => {
   })
 })
 
-E.get_all = (req, res, next) => mongo.connect().then(db => {
-  return db.collection('lists').find({user: req.user._id}).toArray()
-  .then(lists => {
-    res.json(lists)
-  })
-}).catch(next)
+E.get_all = util.http_handler(async (req, res, next) => {
+  let db = await mongo.connect()
+  let lists = await db.collection('todos').distinct('list',
+    {user_id: req.user._id})
+  lists.unshift('Inbox')
+  lists.push('All')
+  res.json(_.uniq(lists))
+})
