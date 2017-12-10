@@ -1,24 +1,24 @@
-import React, {Component} from 'react'
-import {Link} from 'react-router-dom'
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import keys from './keys'
 import api_request from './api.js'
 
 export default class ListItem extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
-    this.state = {todo: null, edit: false}
+    this.state = { todo: null, edit: false }
     this.toggle_button = this.toggle_button.bind(this)
     this.edit_title = this.edit_title.bind(this)
     this.save_title = this.save_title.bind(this)
     this.cancel_edit = this.cancel_edit.bind(this)
     this.props = props
   }
-  componentDidMount () { this.set_props(this.props) }
-  componentWillReceiveProps (props) { this.set_props(props) }
-  set_props (props) {
-    this.setState({edit: false, todo: props.todo})
+  componentDidMount() { this.set_props(this.props) }
+  componentWillReceiveProps(props) { this.set_props(props) }
+  set_props(props) {
+    this.setState({ edit: false, todo: props.todo })
   }
-  update (update) {
+  update(update) {
     api_request(`/todos/${this.state.todo._id}`, {
       method: 'PATCH',
       body: update,
@@ -33,42 +33,45 @@ export default class ListItem extends Component {
     // TODO josh: notify some alert service instead of just logging to console
     .catch(err => console.error(err))
   }
-  edit_title (e) { this.setState({edit: true}) }
-  cancel_edit (e) {
+  edit_title(e) { this.setState({ edit: true }) }
+  cancel_edit(e) {
     if (e.keyCode === keys.ESCAPE) {
-      this.setState({edit: false})
+      this.setState({ edit: false })
     }
     if (e.keyCode === keys.ENTER) {
       this.save_title(e)
     }
   }
-  componentDidUpdate (e) {
+  componentDidUpdate(e) {
     if (this.state.edit) {
       this.refs.edit_todo_title.select()
     }
   }
-  toggle_button (e) { this.update({completed: e.target.checked}) }
-  save_title (e) { this.update({title: e.target.value}) }
-  render () {
+  toggle_button(e) { this.update({ completed: e.target.checked }) }
+  save_title(e) { this.update({ title: e.target.value }) }
+  render() {
     let todo = this.state.todo
     if (!todo) {
       return todo
     }
-    let check_id = 'completed-'+todo._id
+    let check_id = 'completed-' + todo._id
     let edit_mode = this.state.edit
     return (
       <li className={'todo_item' + (todo.completed ? ' completed' : '')}>
         <span className="input-group">
-          <input type="checkbox" id={check_id}
-            defaultChecked={todo.completed} onChange={this.toggle_button}/>
-            <label htmlFor={check_id}/>
+          <input
+            type="checkbox"
+            id={check_id}
+            defaultChecked={todo.completed}
+            onChange={this.toggle_button} />
+          <label htmlFor={check_id} />
         </span>
         {!edit_mode && <span className="clickable" onClick={this.edit_title}>
           {todo.title}</span>}
         {edit_mode &&
           <input ref="edit_todo_title" onBlur={this.save_title}
             onKeyDown={this.cancel_edit}
-            defaultValue={todo.title}/>}
+            defaultValue={todo.title} />}
         {todo.list &&
           <Link to={`/lists/${todo.list._id}`} className="button list_link">
             {todo.list.title}</Link>}
