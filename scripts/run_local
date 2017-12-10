@@ -3,7 +3,10 @@ set -ue
 eval $(docker-machine env -u)
 docker rm -f devmongo || :
 docker rm -f www.dontferget.club || :
-docker run -d --name devmongo mongo
+docker run -d --name devmongo \
+  -v /tmp/mongo:/data/db \
+  mongo
+
 docker run -it --name www.dontferget.club \
   --link devmongo:mongohost \
   -e MONGO_HOST=mongohost \
