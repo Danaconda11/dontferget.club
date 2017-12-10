@@ -2,8 +2,12 @@ const mongo = require('mongodb')
 const config = require('./config')
 let E = module.exports
 
-E.connect = () => {
-  return mongo.MongoClient.connect(`mongodb://${config.mongo_host}/${config.mongo_database}`)
+let connection
+E.connect = async () => {
+  if (!connection) {
+    connection = await mongo.MongoClient.connect(`mongodb://${config.mongo_host}/${config.mongo_database}`)
+  }
+  return connection
 }
 
 E.ObjectId = mongo.ObjectId

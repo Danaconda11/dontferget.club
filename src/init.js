@@ -1,21 +1,20 @@
 const mongo = require('./mongo')
 const config = require('./config')
 const todo_queue = require('./todo_queue')
+const bcrypt = require('bcrypt')
 
-let create_dummy_records = () => {
-  return mongo.connect().then(db => {
-    return db.createCollection("test", {}).then(() => {
-      return db.collection('test').insertOne({title : 'test', completed : false})
-    }).then(() => {
-      return db.collection('users').update({username: 'josh'},
-        {$set: {email: 'joshwillik@gmail.com'}}, {upsert: true})
-    })
-  })
+let create_dummy_records = async () => {
+  let db = await mongo.connect()
+  await db.createCollection('test')
+  await db.collection('test').insertOne({title : 'test', completed : false})
+  let password = await bcrypt.hash('password', 1)
+  await db.collection('users').update({username: 'josh'},
+    {$set: {email: 'user@dontferget.club', password}}, {upsert: true})
 }
 
 module.exports = async () => {
   // HACK josh: disabling automatic account creation for now
-  if (false && config.debug) {
+  if (config.debug) {
     await create_dummy_records()
   }
   // TODO josh: we should have a centralized logger that reports errors
