@@ -26,7 +26,7 @@
   border-bottom: 1px solid #ccc;
 }
 .todo_item input:not([type]) { margin: 0; padding: 0; border: 0; }
-.todo_item.completed { color: #999; text-decoration: line-through; }
+.todo_item.completed span { color: #999; text-decoration: line-through; }
 a.list_link, a.list_link:hover, a.list_link:visited {
   display: inline-block;
   margin: 0 0 0 auto;
