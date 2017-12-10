@@ -11,7 +11,7 @@ const process_message = async (pipe, message) => {
       user_id: message.user_id,
       title: mail.subject.trim(),
       notes: mail.text.trim(),
-      list: ['inbox']
+      list: ['Inbox']
     }
     await todos.insert(todo)
   } catch (e) {
