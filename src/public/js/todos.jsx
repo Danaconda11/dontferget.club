@@ -3,15 +3,18 @@ import {Route} from 'react-router-dom'
 import SideBar from './sidebar.jsx'
 import ListItem from './list-item.jsx'
 import api_request from './api.js'
+import * as qs from 'query-string';
 
 export default class Todos extends Component {
   constructor(props) {
     super(props)
     this.state = { todos: [] }
+    this.done = this.props.location.query
     this.get_todos = this.get_todos.bind(this)
     this.on_change = this.on_change.bind(this)
     this.on_submit = this.on_submit.bind(this)
     this.todo_modified = this.todo_modified.bind(this)
+    console.log(this.props)
   }
   get_todos() {
     api_request('/todos')
@@ -49,6 +52,8 @@ export default class Todos extends Component {
   }
   render() {
     let [completed, in_progress] = _.partition(this.state.todos, todo => todo.completed)
+    let {done} = qs.parse(this.props.location.search)
+
     return (
       <div className="row">
         <div className="col-sm-2">
@@ -60,23 +65,22 @@ export default class Todos extends Component {
               onChange={this.on_change} autoFocus={true} />
             <button className="primary">&#43;</button>
           </form>
-          <ul className="todo_items">
+          {!done && <ul className="todo_items">
             {in_progress.map(todo =>
               <ListItem
                 modified={this.todo_modified}
                 key={todo._id}
                 disabled={todo.completed}
                 todo={todo} />)}
-          </ul>
-          <h5>Done</h5>
-          <ul className="todo_items completed_todos">
+          </ul>}
+          { done && <ul className="todo_items completed_todos">
             {completed.map(todo =>
               <ListItem
                 modified={this.todo_modified}
                 key={todo._id}
                 disabled={todo.completed}
                 todo={todo} />)}
-          </ul>
+          </ul>}
         </div>
         <Route path="/todos/:todo" render={() =>
           <div className="col-md-4">
