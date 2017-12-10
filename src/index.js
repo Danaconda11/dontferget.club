@@ -26,8 +26,6 @@ if (config.auto_login) {
 app.use(body_parser.urlencoded({ extended: false }))
 app.use(body_parser.json())
 app.post('/signup', user.sign_up)
-app.get('/', auth.require_auth({ otherwise: '/login' }),
-  util.redirect('/lists'))
 app.get('/login', auth.require_no_auth({ otherwise: '/' }),
   files.send_file('login.html'))
 app.post('/login', passport.authenticate('local'), util.redirect('/'))
@@ -37,8 +35,9 @@ app.get('/auth/wunderlist', passport.authenticate('wunderlist'))
 app.get('/auth/wunderlist/callback',
   passport.authenticate('wunderlist'),
   util.redirect('/account'))
-app.get('/lists', files.send_file('index.html'))
-app.get('/lists/:id', files.send_file('index.html'))
+// TODO josh: configure list of urls that will send front end app
+app.get('/', files.send_file('index.html'))
+app.get('/todos/:id', files.send_file('index.html'))
 app.get('/account', files.send_file('index.html'))
 app.get('/api/account', user.logged_in)
 app.get('/api/lists', lists.get_all)

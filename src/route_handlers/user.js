@@ -29,7 +29,7 @@ E.sign_up = async (req, res, next) => {
     if (err) {
       return next(err)
     }
-    res.redirect('/lists')
+    res.redirect('/')
   })
 }
 

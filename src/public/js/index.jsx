@@ -11,7 +11,7 @@ let app =
 <Router history={createBrowserHistory()}>
   <div className="app">
     <Nav/>
-    <Route path="/lists" component={TodoApp}/>
+    <Route exact path="/" component={TodoApp}/>
     <Route path="/games/chess" component={Chess}/>
     <Route path="/account" component={Account}/>
   </div>
