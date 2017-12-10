@@ -30,7 +30,10 @@ E.update = (req, res, next) => {
   if (!id || _.isEmpty(update)) {
     return res.status(400).json({ error: 'Invalid update' })
   }
-  // TODO josh: whitelist update keys, keys like 'user_id' should not be changable
+  update = _(update).toPairs()
+  .filter(([k]) => ['notes', 'title', 'completed', 'list'].includes(k))
+  .fromPairs()
+  .value()
   return todos.update(id, update).then(result => {
     return todos.find_by_id(id)
   }).then(todo => {
