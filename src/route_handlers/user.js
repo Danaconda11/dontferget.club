@@ -10,7 +10,7 @@ let E = module.exports
 
 E.sign_up = async (req, res, next) => {
   let email = req.body.username
-  let pass = req.body.password 
+  let pass = req.body.password
   if (!email) {
     return res.status(400).send('bad email address')
   }
@@ -21,11 +21,13 @@ E.sign_up = async (req, res, next) => {
   if (!pass) {
     return res.status(400).send('bad password')
   }
+  // TODO josh/dan: no magic constants
   let hash = await bcrypt.hash(pass, 5)
+  // TODO josh/dan: consistent spacing
   let new_user = await users.create({ email, password:hash })
   req.login(new_user, err =>  {
-    if (err) { 
-      return next(err) 
+    if (err) {
+      return next(err)
     }
     res.redirect('/lists')
   })

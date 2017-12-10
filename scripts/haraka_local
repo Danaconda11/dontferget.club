@@ -1,2 +1,5 @@
 #!/usr/bin/env bash
+eval $(docker-machine env -u)
+echo mongo_host=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' devmongo) \
+  > src/haraka/config/dontferget.ini
 sudo haraka -c src/haraka

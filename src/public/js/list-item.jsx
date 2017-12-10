@@ -71,10 +71,16 @@ export default class ListItem extends Component {
         {edit_mode &&
           <input ref="edit_todo_title" onBlur={this.save_title}
             onKeyDown={this.cancel_edit}
+<<<<<<< HEAD
             defaultValue={todo.title} />}
         {todo.list &&
           <Link to={`/lists/${todo.list._id}`} className="button list_link">
             {todo.list.title}</Link>}
+=======
+            defaultValue={todo.title}/>}
+        {(todo.list||[]).map(l =>
+          <Link key={l} to={`/lists/${l}`} className="button list_link">{l}</Link>)}
+>>>>>>> c7e6c3813a8a4f66f1b9e5d8c3e71a00d89a59a2
       </li>
     )
   }

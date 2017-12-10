@@ -5,7 +5,8 @@ process_title
 # fcrdns
 # dnsbl
 # HELO
-early_talker
+# annoying for development
+# early_talker
 # see config/helo.checks.ini for configuration
 # helo.checks
 # MAIL FROM

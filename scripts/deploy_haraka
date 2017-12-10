@@ -4,6 +4,7 @@ container_name=www.dontferget.club-haraka
 image_name=dontferget-haraka-wisp
 echo deploying haraka
 eval $(docker-machine env www.dontferget.club)
+echo mongo_host=10.99.0.10 > src/haraka/config/dontferget.ini
 docker build -t $image_name -f config/haraka.dockerfile .
 docker rm -f $container_name || :
 # HACK josh: Mongo connection details are hard coded in haraka plugins.

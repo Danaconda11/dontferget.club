@@ -1,9 +1,11 @@
 let config = require('../../config.js')
-// HACK josh: read this from some proper config
-config.mongo_host = '10.99.0.10'
 config.mongo_database = 'todo'
 let users = require('../../users.js')
 let todo_queue = require('../../todo_queue.js')
+
+exports.register = function () {
+  config.mongo_host = this.config.get('dontferget.ini').main.mongo_host
+}
 
 exports.hook_mail = async function (next, conn, [from]) {
   try {
