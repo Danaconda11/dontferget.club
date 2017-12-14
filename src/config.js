@@ -1,3 +1,5 @@
+let utils = require('./utils.js')
+
 let e = process.env
 module.exports = {
   debug: e.DEBUG,
@@ -12,3 +14,7 @@ module.exports = {
   session_secret: e.SESSION_SECRET,
   lichess_id: e.LICHESS_ID,
 }
+
+utils.deep_freeze(module.exports)
+
+
