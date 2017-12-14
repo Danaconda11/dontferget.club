@@ -9,8 +9,8 @@ import qs from 'query-string';
 export default class Todos extends Component {
   constructor(props) {
     super(props)
-    this.state = { todos: [] }
-    this.done = this.props.location.query
+    this.state = {todos: [], list: props.match.params.list}
+    this.done = props.location.query
     this.get_todos = this.get_todos.bind(this)
     this.on_change = this.on_change.bind(this)
     this.on_submit = this.on_submit.bind(this)
@@ -53,6 +53,7 @@ export default class Todos extends Component {
   render() {
     let [completed, in_progress] = _.partition(this.state.todos, todo => todo.completed)
     let {done} = qs.parse(this.props.location.search)
+    let {list} = this.state
     return (
       <div className="row">
         <div className="col-sm-2">
@@ -70,7 +71,8 @@ export default class Todos extends Component {
                 modified={this.todo_modified}
                 key={todo._id}
                 disabled={todo.completed}
-                todo={todo} />)}
+                todo={todo}
+                list={list}/>)}
           </ul>}
           {done && <ul className="todo_items completed_todos">
             {completed.map(todo =>
@@ -78,10 +80,11 @@ export default class Todos extends Component {
                 modified={this.todo_modified}
                 key={todo._id}
                 disabled={todo.completed}
-                todo={todo}/>)}
+                todo={todo}
+                list={list}/>)}
           </ul>}
         </div>
-        <Route path="/todo/:todo" render={({match}) =>
+        <Route path="/list/:list/:todo" render={({match}) =>
           <div className="col-md-4">
             <TodoEditor todo={match.params.todo} />
           </div>}/>

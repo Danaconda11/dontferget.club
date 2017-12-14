@@ -1,6 +1,6 @@
 import React from 'react'
 import {render} from 'react-dom'
-import {Router, Route, Switch} from 'react-router-dom'
+import {Router, Route, Switch, Redirect} from 'react-router-dom'
 import Nav from './nav.jsx'
 import Todos from './todos.jsx'
 import Chess from './chess.jsx'
@@ -14,7 +14,8 @@ let app =
       <Switch>
         <Route path="/games/chess" component={Chess}/>
         <Route path="/account" component={Account}/>
-        <Route path="/" component={Todos}/>
+        <Route path="/" exact render={()=><Redirect to="/list/inbox"/>}/>
+        <Route path="/list/:list" component={Todos}/>
       </Switch>
     </div>
   </Router>

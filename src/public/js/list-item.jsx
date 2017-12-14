@@ -50,7 +50,8 @@ export default class ListItem extends Component {
   toggle_button(e) { this.update({ completed: e.target.checked }) }
   save_title(e) { this.update({ title: e.target.value }) }
   render() {
-    let todo = this.state.todo
+    let {state, props} = this
+    let {todo} = state
     if (!todo) {
       return todo
     }
@@ -65,7 +66,7 @@ export default class ListItem extends Component {
             onChange={this.toggle_button} />
           <label htmlFor={check_id} />
         </span>
-        <Link to={`/todo/${todo._id}`}>{todo.title}</Link>
+        <Link to={`/list/${props.list}/${todo._id}`}>{todo.title}</Link>
         {(todo.list||[]).map(l =>
           <Link key={l} to={`/list/${l.toLowerCase()}`}
             className="button list_link">{l}</Link>)}
