@@ -39,7 +39,9 @@ app.get('/auth/wunderlist/callback',
 app.get('/', files.send_file('index.html'))
 app.get('/todo/:todo', files.send_file('index.html'))
 app.get('/list/:list', files.send_file('index.html'))
+app.get('/list/:list/:todo', files.send_file('index.html'))
 app.get('/account', files.send_file('index.html'))
+// TODO josh: ^ configure list of urls that will send front end app
 app.get('/api/account', user.logged_in)
 app.get('/api/lists', lists.get_all)
 app.post('/api/lists/import', lists.import)
