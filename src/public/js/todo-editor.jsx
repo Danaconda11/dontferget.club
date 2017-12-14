@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import keys from './keys'
 import api_request from './api.js'
 import _ from 'lodash'
+import {Async} from 'react-select'
 
 export default class ListItem extends Component {
   constructor(props) {
@@ -30,6 +31,10 @@ export default class ListItem extends Component {
     .then(res => res.json())
     .then(todo => this.setState({todo}))
   }
+  get_lists (search) {
+    return api_request('/lists', {search: {q: search}})
+    .then(res => res.json())
+  }
   render() {
     let {todo, loading} = this.state
     if (!todo && !loading) {
@@ -52,6 +57,7 @@ export default class ListItem extends Component {
         </div>
         <textarea name="notes" value={todo.notes} onChange={e => this.on_change(e)}
           onBlur={() => this.save()}/>
+        <Async name="todo-lists" loadOptions={input=>this.get_lists(input)}/>
       </div>
     )
   }
