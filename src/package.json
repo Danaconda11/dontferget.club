@@ -39,12 +39,14 @@
     "babel-loader": "^7.1.1",
     "babel-preset-react": "^6.24.1",
     "concurrently": "^3.5.0",
+    "css-loader": "^0.28.7",
     "nodemon": "^1.11.0",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
+    "style-loader": "^0.19.1",
     "webpack": "^3.0.0"
   }
 }
