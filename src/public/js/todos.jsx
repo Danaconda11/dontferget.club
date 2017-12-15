@@ -16,7 +16,7 @@ export default class Todos extends Component {
     this.on_submit = this.on_submit.bind(this)
     this.todo_modified = this.todo_modified.bind(this)
   }
-  list () { return this.props.match.params.list }
+  list (props) { return (props || this.props).match.params.list }
   async get_todos() {
     try {
       let todos = await (await api_request(`/lists/${this.list()}/todos`)).json()
@@ -25,8 +25,11 @@ export default class Todos extends Component {
       console.error(e)
     }
   }
-  componentDidMount() {
-    this.get_todos()
+  componentDidMount() { this.get_todos() }
+  componentDidUpdate(prev_props) {
+    if (this.list(prev_props) !== this.list()) {
+      this.get_todos()
+    }
   }
   todo_modified(updated) {
     let todos = this.state.todos.map(todo => {

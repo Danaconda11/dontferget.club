@@ -68,7 +68,7 @@ export default class ListItem extends Component {
         </span>
         <Link to={`/list/${props.list}/${todo._id}`}>{todo.title}</Link>
         {(todo.list||[]).map(l =>
-          <Link key={l} to={`/list/${l.toLowerCase()}`}
+          <Link key={l} to={`/list/${l}`}
             className="button list_link">{l}</Link>)}
       </li>
     )

@@ -13,9 +13,8 @@ export default class SideBar extends Component {
     return (
       <div className="sidebar">
         {lists.map(list =>
-          <NavLink key={list}
-            to={list === 'Inbox' ? '/' : `/list/${list.toLowerCase()}`}
-            className="list">{list}</NavLink>)}
+          <NavLink key={list} to={`/list/${list}`} className="list">
+            {list}</NavLink>)}
         <Link to="/list/new" className="new_list">
           <i className="fa fa-plus"/>
         </Link>
