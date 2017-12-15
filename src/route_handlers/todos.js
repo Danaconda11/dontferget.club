@@ -20,7 +20,11 @@ E.get = util.http_handler(async (req, res, next) => {
 })
 
 E.get_all = util.http_handler(async (req, res, next) => {
-  let items = await todos.find_all({ user_id: req.user._id })
+  let q = {user_id: req.user._id}
+  if (req.params.list !== 'all') {
+    q.list = req.params.list
+  }
+  let items = await todos.find_all(q)
   return res.json(items)
 })
 

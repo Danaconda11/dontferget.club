@@ -17,15 +17,13 @@ export default class Todos extends Component {
     this.todo_modified = this.todo_modified.bind(this)
   }
   list () { return this.props.match.params.list }
-  get_todos() {
-    api_request('/todos')
-      .then(res => {
-        return res.json()
-      }).then(todos => {
-        this.setState({ todos: todos })
-      }).catch(err => {
-        console.error(err)
-      })
+  async get_todos() {
+    try {
+      let todos = await (await api_request(`/lists/${this.list()}/todos`)).json()
+      this.setState({todos})
+    } catch (e) {
+      console.error(e)
+    }
   }
   componentDidMount() {
     this.get_todos()
