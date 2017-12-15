@@ -21,7 +21,7 @@ E.get = util.http_handler(async (req, res, next) => {
 
 E.get_all = util.http_handler(async (req, res, next) => {
   let q = {user_id: req.user._id}
-  if (req.params.list !== 'all') {
+  if (!/^all$/i.test(req.params.list)) {
     q.list = req.params.list
   }
   let items = await todos.find_all(q)
