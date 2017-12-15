@@ -5,6 +5,7 @@ import keys from './keys'
 import api_request from './api.js'
 import _ from 'lodash'
 import {Async} from 'react-select'
+import 'react-select/dist/react-select.css'
 
 export default class ListItem extends Component {
   constructor(props) {
