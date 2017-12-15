@@ -9,13 +9,14 @@ import qs from 'query-string';
 export default class Todos extends Component {
   constructor(props) {
     super(props)
-    this.state = {todos: [], list: props.match.params.list}
+    this.state = {todos: []}
     this.done = props.location.query
     this.get_todos = this.get_todos.bind(this)
     this.on_change = this.on_change.bind(this)
     this.on_submit = this.on_submit.bind(this)
     this.todo_modified = this.todo_modified.bind(this)
   }
+  list () { return this.props.match.params.list }
   get_todos() {
     api_request('/todos')
       .then(res => {
@@ -38,22 +39,23 @@ export default class Todos extends Component {
   on_change(event) {
     this.setState({ value: event.target.value })
   }
-  on_submit(event) {
-    event.preventDefault()
-    this.refs.todo_input.value = ''
-    api_request('/todos', {
-      method: 'POST',
-      body: { title: this.state.value, completed: false },
-    }).then(() => {
-      this.get_todos()
-    }).catch(err => {
+  async on_submit(event) {
+    try {
+      event.preventDefault()
+      this.refs.todo_input.value = ''
+      let todo = {title: this.state.value, completed: false}
+      if (this.list() && this.list() !== 'all') {
+        todo.list = [this.list()]
+      }
+      await api_request('/todos', {method: 'POST', body: todo})
+      await this.get_todos()
+    } catch (e) {
       console.error(err)
-    })
+    }
   }
   render() {
     let [completed, in_progress] = _.partition(this.state.todos, todo => todo.completed)
     let {done} = qs.parse(this.props.location.search)
-    let {list} = this.state
     return (
       <div className="row">
         <div className="col-sm-2">
@@ -72,7 +74,7 @@ export default class Todos extends Component {
                 key={todo._id}
                 disabled={todo.completed}
                 todo={todo}
-                list={list}/>)}
+                list={this.list()}/>)}
           </ul>}
           {done && <ul className="todo_items completed_todos">
             {completed.map(todo =>
@@ -81,7 +83,7 @@ export default class Todos extends Component {
                 key={todo._id}
                 disabled={todo.completed}
                 todo={todo}
-                list={list}/>)}
+                list={this.list()}/>)}
           </ul>}
         </div>
         <Route path="/list/:list/:todo" render={({match}) =>
