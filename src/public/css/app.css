@@ -1,5 +1,7 @@
 * { box-sizing: border-box; }
 h1, h2, h3, h4, h5, h6 { margin: 0 0 0.5rem 0; }
+/* mini.css needs to go */
+[type="checkbox"] { height: inherit; width: inherit; position: static; margin: inherit; clip: inherit; clip-path: inherit; }
 .d-flex { display: flex; }
 .ml-auto { margin-left: auto; }
 .as-center { align-self: center; }
@@ -57,18 +59,21 @@ h1, h2, h3, h4, h5, h6 { margin: 0 0 0.5rem 0; }
 .todo_item {
   display: flex;
   list-style: none;
-  padding: 1em 0;
+  padding: 0.5em 0;
   border-bottom: 1px solid #ccc;
+  align-items: center;
 }
+.todo_item .drag_handle { margin-right: 0.5em; }
 .todo_item a { text-decoration: none; color: #111; }
-.todo_item input:not([type]) { margin: 0; padding: 0; border: 0; }
+.todo_item input[type="checkbox"] { margin-right: 0.5em; }
 .todo_item.completed span { color: #999; text-decoration: line-through; }
 .todo_item.dragging { opacity: 0.5; }
 a.list_link, a.list_link:hover, a.list_link:visited {
   display: inline-block;
-  margin: 0 0 0 auto;
+  margin: 0 0 0 0.5em;
   text-decoration: none;
-  font-size: 80%;
+  font-size: 75%;
   border-radius: 5px;
-  padding: 0.25em .5em;
+  padding: 0.125em .5em;
 }
+.lists { margin-left: auto; }

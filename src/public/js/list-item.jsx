@@ -56,24 +56,19 @@ class ListItem extends Component {
     if (!todo) {
       return todo
     }
-    let check_id = 'completed-' + todo._id
-  	let { isDragging, connectDragSource } = this.props
+  	let {isDragging, connectDragSource} = this.props
     return connectDragSource(
       <li className={'todo_item' + (todo.completed ? ' completed' : '') +
         (isDragging ? ' dragging' : '')}>
         <i className="fa fa-bars drag_handle"/>
-        <span className="input-group">
-          <input
-            type="checkbox"
-            id={check_id}
-            defaultChecked={todo.completed}
-            onChange={this.toggle_button} />
-          <label htmlFor={check_id} />
-        </span>
+        <input type="checkbox" defaultChecked={todo.completed}
+          onChange={this.toggle_button} />
         <Link to={`/list/${props.list}/${todo._id}`}>{todo.title}</Link>
-        {(todo.list||[]).map(l =>
-          <Link key={l} to={`/list/${l}`}
-            className="button list_link">{l}</Link>)}
+        <div className="lists">
+          {(todo.list||[]).map(l =>
+            <Link key={l} to={`/list/${l}`}
+              className="button list_link">{l}</Link>)}
+        </div>
       </li>
     )
   }
