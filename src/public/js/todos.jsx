@@ -12,7 +12,6 @@ export default class Todos extends Component {
     this.state = {todos: []}
     this.done = props.location.query
     this.get_todos = this.get_todos.bind(this)
-    this.on_change = this.on_change.bind(this)
     this.on_submit = this.on_submit.bind(this)
     this.todo_modified = this.todo_modified.bind(this)
   }
@@ -38,7 +37,7 @@ export default class Todos extends Component {
     this.setState({ todos })
   }
   on_change(event) {
-    this.setState({ value: event.target.value })
+    this.setState({value: event.target.value})
   }
   async on_submit(event) {
     try {
@@ -64,10 +63,17 @@ export default class Todos extends Component {
         </div>
         <div className="col-sm">
           <h3>{this.list()}</h3>
-          <form onSubmit={this.on_submit} className="new_todo">
-            <input ref='todo_input' placeholder='Add a todo'
-              onChange={this.on_change} autoFocus={true} />
-            <button className="primary">&#43;</button>
+          <form onSubmit={this.on_submit} className="new_todo d-flex">
+            <div className="input-group">
+              <input ref="todo_input" placeholder="Buy milk..."
+                className="form-control" onChange={e => this.on_change(e)}
+                autoFocus={true} />
+              <div className="input-group-btn">
+                <button className="btn btn-primary">
+                  <i className="fa fa-plus"/>
+                </button>
+              </div>
+            </div>
           </form>
           {!done && <ul className="todo_items">
             {in_progress.map(todo =>
