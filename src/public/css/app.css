@@ -1,5 +1,6 @@
 * { box-sizing: border-box; }
 h1, h2, h3, h4, h5, h6 { margin: 0 0 0.75rem 0; }
+.d-flex { display: flex; }
 .ml-auto { margin-left: auto; }
 .clickable { cursor: pointer; }
 .app { padding: 0 1em; margin-left: 0; }
@@ -33,7 +34,12 @@ h1, h2, h3, h4, h5, h6 { margin: 0 0 0.75rem 0; }
 .sidebar .list.active {
   background: #ccc;
 }
-.sidebar .new_list { padding: 0 0.5em; cursor: pointer; }
+.sidebar .new_list { padding: 0 0.5em; margin: 0; width: 100%; }
+.sidebar .new_list_btn {
+  padding: 0 0.5em;
+  cursor: pointer;
+  align-self: center;
+}
 .new_todo {
   display: inline-flex;
   padding: 0;
