@@ -65,8 +65,8 @@ export default class TodoList extends Component {
           <div className="d-flex">
             <h3>{this.list()}</h3>
             <div className="ml-auto">
-              <Link className={done ? 'btn btn-link' : 'btn btn-primary'} to={`/list/${this.list()}`}>Doing</Link>
-              <Link className={!done ? 'btn btn-link' : 'btn btn-primary'}  to={`/list/${this.list()}?done=true`}>Done</Link>
+              <Link className={'btn btn-sm ' + (done ? 'btn-link' : 'btn-primary')} to={`/list/${this.list()}`}>Doing</Link>
+              <Link className={'btn btn-sm ' + (!done ? 'btn-link' : 'btn-primary')}  to={`/list/${this.list()}?done=true`}>Done</Link>
             </div>     
           </div>
           <form onSubmit={this.on_submit} className="new_todo d-flex">
@@ -75,7 +75,7 @@ export default class TodoList extends Component {
                 className="form-control" onChange={e => this.on_change(e)}
                 autoFocus={true} />
               <div className="input-group-btn">
-                <button className="btn btn-primary">
+                <button className="btn btn-outline-success">
                   <i className="fa fa-plus"/>
                 </button>
               </div>
