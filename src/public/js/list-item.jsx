@@ -75,9 +75,11 @@ class ListItem extends Component {
   }
 }
 
-export default DragSource('todo', {
+let spec = {
   beginDrag (props) { return props.todo },
-}, (connect, monitor) => ({
+}
+let monitor = (connect, monitor) => ({
 	connectDragSource: connect.dragSource(),
   isDragging: monitor.isDragging(),
-}))(ListItem)
+})
+export default DragSource('todo', spec, monitor)(ListItem)

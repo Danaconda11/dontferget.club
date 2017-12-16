@@ -18,7 +18,7 @@ const render_sidebar = ({canDrop, isOver, connectDropTarget, list}) => connectDr
 const SidebarList = DropTarget('todo', {
   drop (props, monitor) {
     let todo = monitor.getItem()
-    todo.list = (todo.list || []).concat([props.list])
+    todo.list = _.uniq((todo.list || []).concat([props.list]))
     api(`/todos/${todo._id}`, {method: 'PATCH', body: todo})
     // TODO josh: handle update responses
   },
@@ -46,7 +46,6 @@ export default class SideBar extends Component {
         <div className="input-group">
           <input name="new_list" className="form-control" value={new_list}
             onChange={e=>this.on_change(e)} placeholder="New list"/>
-          {/* HACK josh: div wrapper because flexbox isn't shrinking children on firefox */}
           {new_list &&
             <div className="input-group-btn">
               <Link to={`/list/${new_list}`} className="btn btn-primary"
