@@ -1,20 +1,14 @@
-* { box-sizing: border-box; }
 h1, h2, h3, h4, h5, h6 { margin: 0 0 0.5rem 0; }
-/* mini.css needs to go */
-[type="checkbox"] { height: inherit; width: inherit; position: static; margin: inherit; clip: inherit; clip-path: inherit; }
-.d-flex { display: flex; }
-.ml-auto { margin-left: auto; }
-.as-center { align-self: center; }
 .clickable { cursor: pointer; }
 .app { padding: 0 1em; margin-left: 0; }
-.navbar { margin-bottom: 0.5em; }
-.nav_link, .nav_link:visited {
+.navbar { margin-bottom: 0.5em; justify-content: flex-start; padding: 0; }
+.nav-item, .nav-item:visited {
   display: inline-block;
   padding: 0.5em;
   border-bottom: 2px solid transparent;
   color: #111;
 }
-.nav_link:hover, .nav_link.active {
+.nav-item:hover, .nav-item.active {
   border-color: #111;
   transition: none;
   opacity: 1;
@@ -64,16 +58,9 @@ h1, h2, h3, h4, h5, h6 { margin: 0 0 0.5rem 0; }
   align-items: center;
 }
 .todo_item .drag_handle { margin-right: 0.5em; }
-.todo_item a { text-decoration: none; color: #111; }
+.todo_item .title { text-decoration: none; color: #111; }
+.todo_item .list_link { margin-left: 0.5em; }
 .todo_item input[type="checkbox"] { margin-right: 0.5em; }
 .todo_item.completed span { color: #999; text-decoration: line-through; }
 .todo_item.dragging { opacity: 0.5; }
-a.list_link, a.list_link:hover, a.list_link:visited {
-  display: inline-block;
-  margin: 0 0 0 0.5em;
-  text-decoration: none;
-  font-size: 75%;
-  border-radius: 5px;
-  padding: 0.125em .5em;
-}
 .lists { margin-left: auto; }

@@ -12,7 +12,7 @@ import {DragDropContextProvider} from 'react-dnd'
 let app =
   <DragDropContextProvider backend={HTML5Backend}>
     <Router history={createBrowserHistory()}>
-      <div className="app container">
+      <div className="app container-fluid">
         <Nav/>
         <Switch>
           <Route path="/games/chess" component={Chess}/>

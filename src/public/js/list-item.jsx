@@ -63,11 +63,12 @@ class ListItem extends Component {
         <i className="fa fa-bars drag_handle"/>
         <input type="checkbox" defaultChecked={todo.completed}
           onChange={this.toggle_button} />
-        <Link to={`/list/${props.list}/${todo._id}`}>{todo.title}</Link>
+        <Link to={`/list/${props.list}/${todo._id}`} className="title">
+          {todo.title}</Link>
         <div className="lists">
           {(todo.list||[]).map(l =>
             <Link key={l} to={`/list/${l}`}
-              className="button list_link">{l}</Link>)}
+              className="badge badge-secondary list_link">{l}</Link>)}
         </div>
       </li>
     )
