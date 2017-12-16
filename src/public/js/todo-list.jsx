@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Route} from 'react-router-dom'
+import {Route, Link} from 'react-router-dom'
 import SideBar from './sidebar.jsx'
 import ListItem from './list-item.jsx'
 import TodoEditor from './todo-editor.jsx'
@@ -62,7 +62,13 @@ export default class TodoList extends Component {
           <SideBar/>
         </div>
         <div className="col-sm">
-          <h3>{this.list()}</h3>
+          <div className="d-flex">
+            <h3>{this.list()}</h3>
+            <div className="ml-auto">
+              <Link className={done ? 'btn btn-link' : 'btn btn-primary'} to={`/list/${this.list()}`}>Doing</Link>
+              <Link className={!done ? 'btn btn-link' : 'btn btn-primary'}  to={`/list/${this.list()}?done=true`}>Done</Link>
+            </div>     
+          </div>
           <form onSubmit={this.on_submit} className="new_todo d-flex">
             <div className="input-group">
               <input ref="todo_input" placeholder="Buy milk..."
