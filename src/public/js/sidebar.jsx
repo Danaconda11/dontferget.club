@@ -43,19 +43,17 @@ export default class SideBar extends Component {
     return (
       <div className="sidebar">
         {lists.map(list => <SidebarList key={list} list={list}/>)}
-        <div className="d-flex">
-          {/* HACK josh: div wrapper because flexbox isn't shrinking children on firefox */}
-          <div>
-            <input name="new_list" className="new_list" value={new_list}
-              onChange={e=>this.on_change(e)} placeholder="New list"/>
-          </div>
+        <div className="input-group">
+          <input name="new_list" className="form-control" value={new_list}
+            onChange={e=>this.on_change(e)} placeholder="New list"/>
           {/* HACK josh: div wrapper because flexbox isn't shrinking children on firefox */}
           {new_list &&
-            <Link to={`/list/${new_list}`} className="new_list_btn"
-              onClick={() => this.setState({new_list: ''})}>
-              <i className="fa fa-plus"/>
-            </Link>
-            }
+            <div className="input-group-btn">
+              <Link to={`/list/${new_list}`} className="btn btn-primary"
+                onClick={() => this.setState({new_list: ''})}>
+                <i className="fa fa-plus"/>
+              </Link>
+            </div>}
         </div>
       </div>
     )
