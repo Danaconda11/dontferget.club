@@ -1,18 +1,12 @@
 let E = module.exports
 
 E.deep_freeze = obj => {
-	// Retrieve the property names defined on obj
-	var propNames = Object.getOwnPropertyNames(obj);
-
-	// Freeze properties before freezing self
-	propNames.forEach(function (name) {
-		var prop = obj[name];
-
-		// Freeze prop if it is an object
-		if (typeof prop == 'object' && prop !== null)
-			E.deep_freeze(prop);
-	});
-
-	// Freeze self (no-op if already frozen)
-	return Object.freeze(obj);
+	let propNames = Object.getOwnPropertyNames(obj)
+	propNames.forEach(name => {
+		let prop = obj[name]
+		if (typeof prop == 'object' && prop !== null) {
+			E.deep_freeze(prop)
+		}
+	})
+	return Object.freeze(obj)
 }
