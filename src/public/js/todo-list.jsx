@@ -6,7 +6,7 @@ import TodoEditor from './todo-editor.jsx'
 import api_request from './api.js'
 import qs from 'query-string';
 
-export default class Todos extends Component {
+export default class TodoList extends Component {
   constructor(props) {
     super(props)
     this.state = {todos: []}

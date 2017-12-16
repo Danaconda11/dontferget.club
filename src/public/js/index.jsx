@@ -2,7 +2,7 @@ import React from 'react'
 import {render} from 'react-dom'
 import {Router, Route, Switch, Redirect} from 'react-router-dom'
 import Nav from './nav.jsx'
-import Todos from './todos.jsx'
+import TodoList from './todo-list.jsx'
 import Chess from './chess.jsx'
 import Account from './account.jsx'
 import createBrowserHistory from 'history/createBrowserHistory'
@@ -18,7 +18,7 @@ let app =
           <Route path="/games/chess" component={Chess}/>
           <Route path="/account" component={Account}/>
           <Route path="/" exact render={()=><Redirect to="/list/inbox"/>}/>
-          <Route path="/list/:list" component={Todos}/>
+          <Route path="/list/:list" component={TodoList}/>
         </Switch>
       </div>
     </Router>
