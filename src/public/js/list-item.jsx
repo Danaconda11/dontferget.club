@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import {DragSource} from 'react-dnd'
 import keys from './keys'
 import api_request from './api.js'
 
-export default class ListItem extends Component {
+class ListItem extends Component {
   constructor(props) {
     super(props)
     this.state = { todo: null, edit: false }
@@ -56,8 +57,11 @@ export default class ListItem extends Component {
       return todo
     }
     let check_id = 'completed-' + todo._id
-    return (
-      <li className={'todo_item' + (todo.completed ? ' completed' : '')}>
+  	let { isDragging, connectDragSource } = this.props
+    return connectDragSource(
+      <li className={'todo_item' + (todo.completed ? ' completed' : '') +
+        (isDragging ? ' dragging' : '')}>
+        <i className="fa fa-bars drag_handle"/>
         <span className="input-group">
           <input
             type="checkbox"
@@ -74,3 +78,10 @@ export default class ListItem extends Component {
     )
   }
 }
+
+export default DragSource('todo', {
+  beginDrag (props) { return props.todo },
+}, (connect, monitor) => ({
+	connectDragSource: connect.dragSource(),
+  isDragging: monitor.isDragging(),
+}))(ListItem)

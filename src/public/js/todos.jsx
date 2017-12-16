@@ -63,6 +63,7 @@ export default class Todos extends Component {
           <SideBar/>
         </div>
         <div className="col-sm">
+          <h3>{this.list()}</h3>
           <form onSubmit={this.on_submit} className="new_todo">
             <input ref='todo_input' placeholder='Add a todo'
               onChange={this.on_change} autoFocus={true} />

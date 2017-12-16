@@ -6,17 +6,21 @@ import Todos from './todos.jsx'
 import Chess from './chess.jsx'
 import Account from './account.jsx'
 import createBrowserHistory from 'history/createBrowserHistory'
+import HTML5Backend from 'react-dnd-html5-backend'
+import {DragDropContextProvider} from 'react-dnd'
 
 let app =
-  <Router history={createBrowserHistory()}>
-    <div className="app container">
-      <Nav/>
-      <Switch>
-        <Route path="/games/chess" component={Chess}/>
-        <Route path="/account" component={Account}/>
-        <Route path="/" exact render={()=><Redirect to="/list/inbox"/>}/>
-        <Route path="/list/:list" component={Todos}/>
-      </Switch>
-    </div>
-  </Router>
+  <DragDropContextProvider backend={HTML5Backend}>
+    <Router history={createBrowserHistory()}>
+      <div className="app container">
+        <Nav/>
+        <Switch>
+          <Route path="/games/chess" component={Chess}/>
+          <Route path="/account" component={Account}/>
+          <Route path="/" exact render={()=><Redirect to="/list/inbox"/>}/>
+          <Route path="/list/:list" component={Todos}/>
+        </Switch>
+      </div>
+    </Router>
+  </DragDropContextProvider>
 render(app, document.querySelector('#app'))
