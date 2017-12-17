@@ -1,3 +1,4 @@
+- support links in todo title/body
 - two drop targets per list
 - properly handle 'all' when dragging todo items
 - remove from current list when dropping todo item
