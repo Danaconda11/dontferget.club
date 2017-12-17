@@ -2,7 +2,7 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import {DragSource} from 'react-dnd'
 
-function ListItem ({isDragging, connectDragSource, todo, list, onUpdate}) {
+function Todo ({isDragging, connectDragSource, todo, list, onUpdate}) {
   if (!todo) {
     return null
   }
@@ -31,4 +31,5 @@ let monitor = (connect, monitor) => ({
 	connectDragSource: connect.dragSource(),
   isDragging: monitor.isDragging(),
 })
-export default DragSource('todo', spec, monitor)(ListItem)
+Todo = DragSource('todo', spec, monitor)(Todo)
+export default Todo

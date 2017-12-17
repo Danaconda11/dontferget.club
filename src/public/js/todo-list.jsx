@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
-import ListItem from './list-item.jsx'
+import Todo from './todo.jsx'
 
 export default function TodoList ({name, todos, onTodoCreate, onTodoUpdate,
   showDone})
@@ -42,7 +42,7 @@ export default function TodoList ({name, todos, onTodoCreate, onTodoUpdate,
       </form>
       <ul className="todo_items">
         {todos.map(todo =>
-          <ListItem
+          <Todo
             key={todo._id}
             onUpdate={onTodoUpdate}
             todo={todo}

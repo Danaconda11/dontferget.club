@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import api_request from './api.js'
 import _ from 'lodash'
 
-export default class ListItem extends Component {
+export default class TodoEditor extends Component {
   constructor(props) {
     super(props)
     this.state = {loading: true, todo: null}
@@ -58,4 +58,4 @@ export default class ListItem extends Component {
     )
   }
 }
-ListItem.contextTypes = {router: PropTypes.object}
+TodoEditor.contextTypes = {router: PropTypes.object}

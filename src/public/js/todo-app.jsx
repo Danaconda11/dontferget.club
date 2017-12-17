@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {Route, Link} from 'react-router-dom'
 import SideBar from './sidebar.jsx'
-import ListItem from './list-item.jsx'
 import TodoList from './todo-list.jsx'
 import TodoEditor from './todo-editor.jsx'
 import api_request from './api.js'
