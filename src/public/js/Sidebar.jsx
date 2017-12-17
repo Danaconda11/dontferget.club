@@ -40,6 +40,21 @@ export default class Sidebar extends Component {
   render() {
     let {lists, current} = this.props
     let {new_list} = this.state
+    lists = lists.slice().sort((a, b) => {
+      if (a === 'Inbox') {
+        return -1
+      }
+      if (b === 'Inbox') {
+        return 1
+      }
+      if (a === 'All') {
+        return -1
+      }
+      if (b === 'All') {
+        return 1
+      }
+      return 0
+    })
     return (
       <div className="sidebar">
         {lists.map(list =>
