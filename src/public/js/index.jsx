@@ -14,12 +14,10 @@ let app =
     <Router history={createBrowserHistory()}>
       <div className="app container-fluid">
         <Nav/>
-        <Switch>
-          <Route path="/games/chess" component={Chess}/>
-          <Route path="/account" component={Account}/>
-          <Route path="/" exact render={()=><Redirect to="/list/inbox"/>}/>
-          <Route path="/list/:list" component={TodoList}/>
-        </Switch>
+        <Route path="/games/chess" component={Chess}/>
+        <Route path="/account" component={Account}/>
+        <Route path="/" exact render={()=><Redirect to="/list/Inbox"/>}/>
+        <Route path="/list/:list" component={TodoList}/>
       </div>
     </Router>
   </DragDropContextProvider>
