@@ -2,8 +2,8 @@
 - two drop targets per list
 - properly handle 'all' when dragging todo items
 - remove from current list when dropping todo item
-* (josh) review state stores
-- remove chess page
 - todos must have some content
 - improve single todo editor styles
 - change password
++ (josh) remove chess page
++ (josh) review state stores
