@@ -1,11 +1,8 @@
 import React, {Component} from 'react'
 import {Link, Redirect} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import keys from './keys'
 import api_request from './api.js'
 import _ from 'lodash'
-import {Async} from 'react-select'
-import 'react-select/dist/react-select.css'
 
 export default class ListItem extends Component {
   constructor(props) {
@@ -28,9 +25,7 @@ export default class ListItem extends Component {
     if (_.isEqual(todo, saved)) {
       return
     }
-    api_request(`/todos/${saved._id}`, {method: 'PATCH', body: todo})
-    .then(res => res.json())
-    .then(todo => this.setState({todo}))
+    this.props.onUpdate(saved._id, todo)
   }
   get_lists (search) {
     return api_request('/lists', {search: {q: search}})
@@ -49,7 +44,8 @@ export default class ListItem extends Component {
         <div className="row">
           <h3>
             <input name="title" value={todo.title}
-              onChange={e => this.on_change(e)}/>
+              onChange={e => this.on_change(e)}
+              onBlur={() => this.save()}/>
           </h3>
           <div className="ml-auto">
             <span className="close"
@@ -58,7 +54,6 @@ export default class ListItem extends Component {
         </div>
         <textarea name="notes" value={todo.notes} onChange={e => this.on_change(e)}
           onBlur={() => this.save()}/>
-        <Async name="todo-lists" loadOptions={input=>this.get_lists(input)}/>
       </div>
     )
   }

@@ -2,7 +2,7 @@ import React from 'react'
 import {render} from 'react-dom'
 import {Router, Route, Switch, Redirect} from 'react-router-dom'
 import Nav from './nav.jsx'
-import TodoList from './todo-list.jsx'
+import TodoApp from './todo-app.jsx'
 import Account from './account.jsx'
 import createBrowserHistory from 'history/createBrowserHistory'
 import HTML5Backend from 'react-dnd-html5-backend'
@@ -15,7 +15,7 @@ let app =
         <Nav/>
         <Route path="/account" component={Account}/>
         <Route path="/" exact render={()=><Redirect to="/list/Inbox"/>}/>
-        <Route path="/list/:list" component={TodoList}/>
+        <Route path="/list/:list" component={TodoApp}/>
       </div>
     </Router>
   </DragDropContextProvider>

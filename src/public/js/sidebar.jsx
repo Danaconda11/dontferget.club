@@ -31,15 +31,15 @@ const SidebarList = DropTarget('todo', {
 export default class SideBar extends Component {
   constructor (props) {
     super(props)
-    this.state = {lists: [], new_list: ''}
-    api('/lists').then(res => res.json()).then(lists => this.setState({lists}))
+    this.state = {new_list: ''}
   }
   on_change (e) {
     let {target} = e
     this.setState({[target.name]: target.value})
   }
   render() {
-    let {lists, new_list} = this.state
+    let {lists} = this.props
+    let {new_list} = this.state
     return (
       <div className="sidebar">
         {lists.map(list => <SidebarList key={list} list={list}/>)}
