@@ -1,4 +1,4 @@
-let utils = require('./utils.js')
+const deep_freeze = require('deep-freeze')
 
 let e = process.env
 module.exports = {
@@ -15,6 +15,4 @@ module.exports = {
   lichess_id: e.LICHESS_ID,
 }
 
-utils.deep_freeze(module.exports)
-
-
+deep_freeze(module.exports)

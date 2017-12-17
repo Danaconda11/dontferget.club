@@ -17,6 +17,7 @@
     "Haraka": "^2.8.16",
     "bcrypt": "^1.0.3",
     "body-parser": "^1.17.2",
+    "deep-freeze": "0.0.1",
     "express": "^4.15.3",
     "express-session": "^1.15.3",
     "express-static": "^1.2.4",
