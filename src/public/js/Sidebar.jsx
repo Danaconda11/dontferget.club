@@ -4,14 +4,14 @@ import {DropTarget} from 'react-dnd'
 import api from './api.js'
 import _ from 'lodash'
 
-const render_sidebar = ({canDrop, isOver, connectDropTarget, list}) => connectDropTarget(
+const render_nav_link = ({canDrop, isOver, connectDropTarget, list, active}) => connectDropTarget(
   <div>
-    <NavLink to={`/list/${list}`}
+    <Link to={`/list/${list}`}
       className={'list' + (canDrop ? ' droppable' : '') +
-        (isOver ? ' drop_hover' : '')}>
+        (isOver ? ' drop_hover' : '') + (active ? ' active' : '')}>
       {list}
       <i className="ml-auto as-center fa fa-bullseye"/>
-    </NavLink>
+    </Link>
   </div>
 )
 
@@ -26,7 +26,7 @@ const SidebarList = DropTarget('todo', {
   connectDropTarget: connect.dropTarget(),
   isOver: monitor.isOver(),
   canDrop: monitor.canDrop(),
-}))(render_sidebar)
+}))(render_nav_link)
 
 export default class Sidebar extends Component {
   constructor (props) {
@@ -38,11 +38,13 @@ export default class Sidebar extends Component {
     this.setState({[target.name]: target.value})
   }
   render() {
-    let {lists} = this.props
+    let {lists, current} = this.props
     let {new_list} = this.state
     return (
       <div className="sidebar">
-        {lists.map(list => <SidebarList key={list} list={list}/>)}
+        {lists.map(list =>
+          <SidebarList key={list} list={list} active={list === current}/>
+        )}
         <div className="input-group">
           <input name="new_list" className="form-control" value={new_list}
             onChange={e=>this.on_change(e)} placeholder="New list"/>
