@@ -28,7 +28,7 @@ const SidebarList = DropTarget('todo', {
   canDrop: monitor.canDrop(),
 }))(render_sidebar)
 
-export default class SideBar extends Component {
+export default class Sidebar extends Component {
   constructor (props) {
     super(props)
     this.state = {new_list: ''}

@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {Route, Link} from 'react-router-dom'
-import SideBar from './sidebar.jsx'
-import TodoList from './todo-list.jsx'
-import TodoEditor from './todo-editor.jsx'
+import SideBar from './Sidebar.jsx'
+import TodoList from './TodoList.jsx'
+import TodoEditor from './TodoEditor.jsx'
 import api_request from './api.js'
 import qs from 'query-string';
 const {assign} = Object

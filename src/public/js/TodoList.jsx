@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
-import Todo from './todo.jsx'
+import Todo from './Todo.jsx'
 
 export default function TodoList ({name, todos, onTodoCreate, onTodoUpdate,
   showDone})
