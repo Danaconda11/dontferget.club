@@ -63,6 +63,7 @@ export default class TodoApp extends Component {
       this.setState(prev => {
         return assign({}, prev, {
           todos: [todo].concat(prev.todos),
+          lists: _.uniq(prev.lists.concat(todo.list).filter(Boolean)),
         })
       })
     } catch (e) {
