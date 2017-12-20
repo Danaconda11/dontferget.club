@@ -95,11 +95,12 @@ export default class Sidebar extends Component {
         )}
           <ClearButton/>
         <div className="input-group">
-          <input name="new_list" className="form-control" value={new_list}
-            onChange={e=>this.on_change(e)} placeholder="New list"/>
+          <input name="new_list" className="form-control form-control-sm"
+            value={new_list} onChange={e=>this.on_change(e)}
+            placeholder="New list"/>
           {new_list &&
             <div className="input-group-btn">
-              <Link to={`/list/${new_list}`} className="btn btn-primary"
+              <Link to={`/list/${new_list}`} className="btn btn-sm btn-primary"
                 onClick={() => this.setState({new_list: ''})}>
                 <i className="fa fa-plus"/>
               </Link>
