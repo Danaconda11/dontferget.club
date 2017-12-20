@@ -15,6 +15,18 @@ const render_nav_link = ({canDrop, isOver, connectDropTarget, list, active}) => 
   </div>
 )
 
+const render_clear = ({canDrop, isOver, connectDropTarget, list, active}) => connectDropTarget(
+  <div>
+    {canDrop && 
+      <div 
+        className={'clear_button btn btn-sm btn-danger' 
+          + (canDrop ? ' droppable' : '') 
+          + (isOver ? ' drop_hover ' : '') 
+          + (active ? ' active ' : '')}> Clear Labels <i className="ml-auto as-center fa fa-bullseye"/>
+      </div>}
+  </div>
+)
+
 const SidebarList = DropTarget('todo', {
   drop (props, monitor) {
     let todo = monitor.getItem()
@@ -27,6 +39,19 @@ const SidebarList = DropTarget('todo', {
   isOver: monitor.isOver(),
   canDrop: monitor.canDrop(),
 }))(render_nav_link)
+
+const ClearButton = DropTarget('todo', {
+  drop (props, monitor) {
+    let todo = monitor.getItem()
+    todo.list = []
+    api(`/todos/${todo._id}`, {method: 'PATCH', body: todo})
+  },
+}, (connect, monitor) => ({
+  connectDropTarget: connect.dropTarget(),
+  isOver: monitor.isOver(),
+  canDrop: monitor.canDrop(),
+}))(render_clear)
+
 
 export default class Sidebar extends Component {
   constructor (props) {
@@ -60,6 +85,7 @@ export default class Sidebar extends Component {
         {lists.map(list =>
           <SidebarList key={list} list={list} active={list === current}/>
         )}
+        <ClearButton/>
         <div className="input-group">
           <input name="new_list" className="form-control" value={new_list}
             onChange={e=>this.on_change(e)} placeholder="New list"/>
