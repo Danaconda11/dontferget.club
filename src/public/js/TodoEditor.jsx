@@ -14,18 +14,20 @@ export default class TodoEditor extends Component {
   render() {
     let {todo} = this.props
     return (
-      <div>
-        <PrettyInput value={todo.title} oneLine={true}
-          onChange={v => this.save({title: v})}>
-          <h3>{todo.title}</h3>
-        </PrettyInput>
-        <PrettyInput value={todo.notes} onChange={v => this.save({notes: v})}>
-          <div className="card">
-            <div className="card-body">
+      <div className="todo_editor card">
+        <div className="card-body">
+          <div className="card-title">
+            <PrettyInput value={todo.title} oneLine={true}
+              onChange={v => this.save({title: v})}>
+              <h4>{todo.title}</h4>
+            </PrettyInput>
+          </div>
+          <PrettyInput value={todo.notes} onChange={v => this.save({notes: v})}>
+            <div className="card-text">
               {todo.notes || <span className="text-muted">Notes</span>}
             </div>
-          </div>
-        </PrettyInput>
+          </PrettyInput>
+        </div>
       </div>
     )
   }
