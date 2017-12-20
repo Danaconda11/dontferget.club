@@ -3,6 +3,7 @@ import {NavLink, Link} from 'react-router-dom'
 import {DropTarget} from 'react-dnd'
 import api from './api.js'
 import _ from 'lodash'
+import { CSSTransitionGroup } from 'react-transition-group'
 
 const render_nav_link = ({canDrop, isOver, connectDropTarget, list, active}) => connectDropTarget(
   <div>
@@ -10,7 +11,7 @@ const render_nav_link = ({canDrop, isOver, connectDropTarget, list, active}) => 
       className={'list' + (canDrop ? ' droppable' : '') +
         (isOver ? ' drop_hover' : '') + (active ? ' active' : '')}>
       {list}
-      <i className="ml-auto as-center fa fa-bullseye"/>
+      <i className={'ml-auto as-center fa fa-bullseye '}/>
     </Link>
   </div>
 )
@@ -18,12 +19,21 @@ const render_nav_link = ({canDrop, isOver, connectDropTarget, list, active}) => 
 const render_clear = ({canDrop, isOver, connectDropTarget, list, active}) => connectDropTarget(
   <div>
     {canDrop && 
+    <CSSTransitionGroup
+      transitionName="fade"
+      transitionAppear={true}
+      transitionAppear={true}
+      transitionAppearTimeout={500}
+      transitionEnterTimeout={500}
+      transitionLeaveTimeout={300}>
       <div 
         className={'clear_button btn btn-sm btn-danger' 
           + (canDrop ? ' droppable' : '') 
           + (isOver ? ' drop_hover ' : '') 
-          + (active ? ' active ' : '')}> Clear Labels <i className="ml-auto as-center fa fa-bullseye"/>
-      </div>}
+          + (active ? ' active ' : '')}> Clear Labels <i className={"ml-auto as-center fa fa-bullseye"}/>
+      </div>
+    </CSSTransitionGroup>
+      }
   </div>
 )
 
@@ -51,7 +61,6 @@ const ClearButton = DropTarget('todo', {
   isOver: monitor.isOver(),
   canDrop: monitor.canDrop(),
 }))(render_clear)
-
 
 export default class Sidebar extends Component {
   constructor (props) {
@@ -85,7 +94,7 @@ export default class Sidebar extends Component {
         {lists.map(list =>
           <SidebarList key={list} list={list} active={list === current}/>
         )}
-        <ClearButton/>
+          <ClearButton/>
         <div className="input-group">
           <input name="new_list" className="form-control" value={new_list}
             onChange={e=>this.on_change(e)} placeholder="New list"/>
