@@ -2,22 +2,21 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import {DragSource} from 'react-dnd'
 import {isWebUri} from 'valid-url'
+import {withRouter} from 'react-router-dom'
 
-function Todo ({isDragging, connectDragSource, todo, list, onUpdate}) {
+function Todo ({isDragging, connectDragSource, todo, list, onUpdate, history}) {
   if (!todo) {
     return null
   }
   let lists = _.uniq((todo.list||[]))
+  const navigate = () => history.push(`/list/${list}/${todo._id}`)
   return connectDragSource(
     <li className={'todo_item' + (todo.completed ? ' completed' : '') +
-      (isDragging ? ' dragging' : '')}>
+      (isDragging ? ' dragging' : '')} onClick={navigate}>
       <i className="fa fa-bars drag_handle"/>
       <input type="checkbox" defaultChecked={todo.completed}
         onChange={e => onUpdate(todo._id, {completed: e.target.checked})} />
-      {isWebUri(todo.title) ? <a href={todo.title}>{todo.title}</a> :
-        <Link to={`/list/${list}/${todo._id}`} className="title">
-          {todo.title}
-        </Link>}
+      {isWebUri(todo.title) ? <a href={todo.title}>{todo.title}</a> : todo.title}
       <div className="lists">
         {lists.map(l =>
           <Link key={l} to={`/list/${l}`}
@@ -34,5 +33,5 @@ let monitor = (connect, monitor) => ({
 	connectDragSource: connect.dragSource(),
   isDragging: monitor.isDragging(),
 })
-Todo = DragSource('todo', spec, monitor)(Todo)
+Todo = withRouter(DragSource('todo', spec, monitor)(Todo))
 export default Todo
