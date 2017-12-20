@@ -1,6 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import {DragSource} from 'react-dnd'
+import {isWebUri} from 'valid-url'
 
 function Todo ({isDragging, connectDragSource, todo, list, onUpdate}) {
   if (!todo) {
@@ -13,8 +14,10 @@ function Todo ({isDragging, connectDragSource, todo, list, onUpdate}) {
       <i className="fa fa-bars drag_handle"/>
       <input type="checkbox" defaultChecked={todo.completed}
         onChange={e => onUpdate(todo._id, {completed: e.target.checked})} />
-      <Link to={`/list/${list}/${todo._id}`} className="title">
-        {todo.title}</Link>
+      {isWebUri(todo.title) ? <a href={todo.title}>{todo.title}</a> :
+        <Link to={`/list/${list}/${todo._id}`} className="title">
+          {todo.title}
+        </Link>}
       <div className="lists">
         {lists.map(l =>
           <Link key={l} to={`/list/${l}`}
