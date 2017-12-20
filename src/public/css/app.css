@@ -18,23 +18,28 @@ h1, h2, h3, h4, h5, h6 { margin: 0 0 0.5rem 0; }
   border-radius: 5px;
   padding: 0.5em;;
 }
-.sidebar .list {
+.sidebar .list, .sidebar .clear_button {
   display: flex;
   margin: 0 0 0.25em 0;
   text-decoration: none;
-  background: #ddd;
   border-radius: 5px;
   padding: 0.25em 0.5em;
-  color: #111;
   width: 100%;
   position: relative;
   left: 0;
   transition: left 300ms;
 }
+
 .sidebar .list .fa { opacity: 0; transition: all 300ms; color: #fff; }
-.sidebar .list.active { background: #0277bd; color: #ddd; }
+.sidebar .list.active  { background: #0277bd; color: #ddd; }
 .sidebar .list.droppable .fa { opacity: 1; }
 .sidebar .list.drop_hover { left: 10px; }
+
+.clear_button { opacity: 0; transition: all 300ms; color: #fff; }
+.clear_button.active  { background: #be1030; color: #ddd; }
+.clear_button.droppable { opacity: 1; }
+.clear_button.drop_hover { left: 10px; }
+
 .new_todo {
   display: inline-flex;
   padding: 0;
