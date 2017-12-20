@@ -10,7 +10,7 @@ const {assign} = Object
 export default class TodoApp extends Component {
   constructor(props) {
     super(props)
-    this.state = {todos: [],  lists: []}
+    this.state = {todos: [],  lists: [], focused_todo: null}
     this.create_todo = this.create_todo.bind(this)
     this.on_todo_update = this.on_todo_update.bind(this)
   }
@@ -31,6 +31,14 @@ export default class TodoApp extends Component {
       console.error(e)
     }
   }
+  async load_focused_todo (id) {
+    try {
+      let todo = await (await api_request(`/todos/${id}`)).json()
+      this.setState({focused_todo: todo})
+    } catch (e) {
+      console.error(e)
+    }
+  }
   async on_todo_update (id, update) {
     try {
       let res = await api_request(`/todos/${id}`, {method: 'PATCH', body: update})
@@ -39,8 +47,10 @@ export default class TodoApp extends Component {
       }
       let todo = await res.json()
       this.setState(prev => {
+        let focused = prev.focused_todo
         return assign({}, prev, {
           todos: prev.todos.map(_todo => _todo._id !== todo._id ? _todo : todo),
+          focused_todo: focused && focused._id === todo._id ? todo : focused,
         })
       })
       // TODO josh: notify an alert service instead of just logging to console
@@ -51,9 +61,17 @@ export default class TodoApp extends Component {
   componentDidMount() {
     this.get_todos()
     this.get_lists()
+    let focused = this.props.match.params.todo
+    if (focused) {
+      this.load_focused_todo(focused)
+    }
   }
-  componentDidUpdate(prev_props) {
-    if (this.list(prev_props) !== this.list()) {
+  componentDidUpdate(prev) {
+    let focused = this.props.match.params.todo
+    if (focused !== prev.match.params.todo) {
+      this.load_focused_todo(focused)
+    }
+    if (this.list(prev) !== this.list()) {
       this.get_todos()
     }
   }
@@ -71,7 +89,7 @@ export default class TodoApp extends Component {
     }
   }
   render() {
-    let {lists, todos} = this.state
+    let {lists, todos, focused_todo} = this.state
     let [completed, in_progress] = _.partition(todos, todo => todo.completed)
     let {done} = qs.parse(this.props.location.search)
     return (
@@ -89,10 +107,10 @@ export default class TodoApp extends Component {
             onTodoCreate={this.create_todo}
             onTodoUpdate={this.on_todo_update}/>
         </div>
-        <Route path="/list/:list/:todo" render={({match}) =>
+        <Route path="/list/:list/:todo" render={() =>
           <div className="col-md-4">
-            <TodoEditor todo={match.params.todo}
-              onUpdate={this.on_todo_update}/>
+            {focused_todo ? <TodoEditor todo={focused_todo}
+              onUpdate={this.on_todo_update}/> : <p>Loading...</p>}
           </div>}/>
       </div>
     )

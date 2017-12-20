@@ -15,7 +15,7 @@ let app =
         <Nav/>
         <Route path="/account" component={AccountPage}/>
         <Route path="/" exact render={()=><Redirect to="/list/Inbox"/>}/>
-        <Route path="/list/:list" component={TodoApp}/>
+        <Route path="/list/:list/:todo?" component={TodoApp}/>
       </div>
     </Router>
   </DragDropContextProvider>

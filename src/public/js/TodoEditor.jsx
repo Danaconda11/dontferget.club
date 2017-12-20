@@ -1,61 +1,37 @@
 import React, {Component} from 'react'
 import {Link, Redirect} from 'react-router-dom'
 import PropTypes from 'prop-types'
+import PrettyInput from './PrettyInput.jsx'
 import api_request from './api.js'
 import _ from 'lodash'
+const {assign} = Object
 
 export default class TodoEditor extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {loading: true, todo: null}
-    api_request(`/todos/${props.todo}`).then(res => res.json()).then(todo => {
-      this.setState({todo, saved: _.clone(todo), loading: false})
-    })
-  }
-  on_change (e) {
-    let {target} = e
-    this.setState(prev => {
-      let {todo} = prev
-      todo[target.name] = target.value
-      return {todo}
-    })
-  }
-  save () {
-    let {todo, saved} = this.state
-    if (_.isEqual(todo, saved)) {
-      return
-    }
-    this.props.onUpdate(saved._id, todo)
-  }
-  get_lists (search) {
-    return api_request('/lists', {search: {q: search}})
-    .then(res => res.json())
+  save (update) {
+    let {todo} = this.props
+    this.props.onUpdate(todo._id, assign({}, todo, update))
   }
   render() {
-    let {todo, loading} = this.state
-    if (!todo && !loading) {
-      return <Redirect to="/"/>
-    }
-    if (!todo) {
-      return <p>Loading...</p>
-    }
+    let {todo} = this.props
     return (
       <div>
-        <div className="row">
-          <h3>
-            <input name="title" value={todo.title}
-              onChange={e => this.on_change(e)}
-              onBlur={() => this.save()}/>
-          </h3>
+        <div className="d-flex">
+          <PrettyInput value={todo.title} oneLine={true}
+            onChange={v => this.save({title: v})}>
+            <h3>{todo.title}</h3>
+          </PrettyInput>
           <div className="ml-auto">
-            <span className="close"
-              onClick={this.context.router.history.goBack}/>
+            <span className="close" onClick={() => this.params.onClose()}/>
           </div>
         </div>
-        <textarea name="notes" value={todo.notes} onChange={e => this.on_change(e)}
-          onBlur={() => this.save()}/>
+        <PrettyInput value={todo.notes} onChange={v => this.save({notes: v})}>
+          <div className="card">
+            <div className="card-body">
+              {todo.notes || <span className="text-muted">Notes</span>}
+            </div>
+          </div>
+        </PrettyInput>
       </div>
     )
   }
 }
-TodoEditor.contextTypes = {router: PropTypes.object}
