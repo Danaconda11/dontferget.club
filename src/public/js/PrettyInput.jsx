@@ -19,17 +19,18 @@ export default class PrettyInput extends Component {
     let {oneLine} = this.props
     if (editing) {
       if (oneLine) {
-        return <input value={value} autoFocus
+        return <input value={value} autoFocus className="form-control"
           onChange={e => this.setState({value: e.target.value})}
           onBlur={this.save}/>
       }
-      return <textarea value={value} autoFocus
+      return <textarea value={value} autoFocus className="form-control"
         onChange={e => this.setState({value: e.target.value})}
         onBlur={this.save}/>
     }
     return (
       <div className="pretty_input"
         onClick={() => this.setState({editing: true, value: this.props.value})}>
+        <i className="fa fa-pencil edit"/>
         {this.props.children}
       </div>
     )

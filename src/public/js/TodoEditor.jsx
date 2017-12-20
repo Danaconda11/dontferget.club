@@ -15,15 +15,10 @@ export default class TodoEditor extends Component {
     let {todo} = this.props
     return (
       <div>
-        <div className="d-flex">
-          <PrettyInput value={todo.title} oneLine={true}
-            onChange={v => this.save({title: v})}>
-            <h3>{todo.title}</h3>
-          </PrettyInput>
-          <div className="ml-auto">
-            <span className="close" onClick={() => this.params.onClose()}/>
-          </div>
-        </div>
+        <PrettyInput value={todo.title} oneLine={true}
+          onChange={v => this.save({title: v})}>
+          <h3>{todo.title}</h3>
+        </PrettyInput>
         <PrettyInput value={todo.notes} onChange={v => this.save({notes: v})}>
           <div className="card">
             <div className="card-body">
