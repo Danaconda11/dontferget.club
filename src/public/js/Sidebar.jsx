@@ -92,9 +92,9 @@ export default class Sidebar extends Component {
     return (
       <div className="sidebar">
         <div className={`d-xs-flex d-sm-none ${open ? 'mb-2' : ''}`}>
-          <button className="btn btn-sm btn-default"
+          <button className="btn btn-sm btn-link"
             onClick={() => this.setState({open: !open})}>
-            Show lists
+            {open ? '- Hide' : '+ Show'} lists
           </button>
           <i className="ml-auto fa fa-hamburger"/>
         </div>
