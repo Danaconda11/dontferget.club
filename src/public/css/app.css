@@ -76,7 +76,14 @@ h1, h2, h3, h4, h5, h6 { margin: 0 0 0.5rem 0; }
   cursor: pointer;
 }
 .todo_item .drag_handle { margin-right: 0.5em; color: #aaa; cursor: grab; }
-.todo_item .list_link { margin-left: 0.5em; }
+.list_label { margin-left: 0.5em; }
+.list_label .remove {
+  border-left: 1px solid white;
+  padding-left: 4px;
+  display: none;
+}
+.list_label:hover .remove { display: inline-block; }
+.list_label .remove:hover { color: red; }
 .todo_item input[type="checkbox"] { margin-right: 0.5em; }
 .todo_item.completed span { color: #999; text-decoration: line-through; }
 .todo_item.dragging { opacity: 0.5; }

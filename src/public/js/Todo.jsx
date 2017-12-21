@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import {DragSource} from 'react-dnd'
 import {isWebUri} from 'valid-url'
 import {withRouter} from 'react-router-dom'
+import _ from 'lodash'
 
 function Todo ({isDragging, connectDragSource, todo, list, onUpdate, history}) {
   if (!todo) {
@@ -10,7 +11,7 @@ function Todo ({isDragging, connectDragSource, todo, list, onUpdate, history}) {
   }
   let lists = _.uniq((todo.list||[]))
   const navigate = e => {
-    if (['INPUT', 'I'].includes(e.target.nodeName)) {
+    if (['INPUT', 'I', 'A'].includes(e.target.nodeName)) {
       return
     }
     history.push(`/list/${list}/${todo._id}`)
@@ -25,7 +26,14 @@ function Todo ({isDragging, connectDragSource, todo, list, onUpdate, history}) {
       <div className="lists">
         {lists.map(l =>
           <Link key={l} to={`/list/${l}`}
-            className="badge badge-secondary list_link">{l}</Link>)}
+            className="badge badge-secondary list_label">
+            {l}
+            <i className="fa fa-remove remove"
+              onClick={e => {
+                e.preventDefault()
+                onUpdate(todo._id, {list: _.without(todo.list, l)})
+              }}/>
+          </Link>)}
       </div>
     </li>
   )
