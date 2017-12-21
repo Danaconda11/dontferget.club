@@ -9,7 +9,12 @@ function Todo ({isDragging, connectDragSource, todo, list, onUpdate, history}) {
     return null
   }
   let lists = _.uniq((todo.list||[]))
-  const navigate = () => history.push(`/list/${list}/${todo._id}`)
+  const navigate = e => {
+    if (['INPUT', 'I'].includes(e.target.nodeName)) {
+      return
+    }
+    history.push(`/list/${list}/${todo._id}`)
+  }
   return connectDragSource(
     <li className={'todo_item' + (todo.completed ? ' completed' : '') +
       (isDragging ? ' dragging' : '')} onClick={navigate}>
