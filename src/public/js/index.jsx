@@ -1,7 +1,7 @@
 import React from 'react'
 import {render} from 'react-dom'
 import {Router, Route, Switch, Redirect} from 'react-router-dom'
-import Nav from './Nav.jsx'
+import Navbar from './Navbar.jsx'
 import TodoApp from './TodoApp.jsx'
 import AccountPage from './AccountPage.jsx'
 import createBrowserHistory from 'history/createBrowserHistory'
@@ -12,7 +12,7 @@ let app =
   <DragDropContextProvider backend={HTML5Backend}>
     <Router history={createBrowserHistory()}>
       <div className="app container-fluid">
-        <Nav/>
+        <Navbar/>
         <Route path="/account" component={AccountPage}/>
         <Route path="/" exact render={()=><Redirect to="/list/Inbox"/>}/>
         <Route path="/list/:list/:todo?" component={TodoApp}/>

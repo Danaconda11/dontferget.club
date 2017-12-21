@@ -12,6 +12,10 @@ h1, h2, h3, h4, h5, h6 { margin: 0 0 0.5rem 0; }
   border-bottom: 2px solid transparent;
   color: #111;
 }
+.navbar .log-out:hover {
+  color: var(--danger);
+  border-bottom-color: var(--danger);
+}
 .nav-item:hover, .nav-item.active {
   border-color: #111;
   transition: none;
