@@ -1,4 +1,5 @@
 const express = require('express')
+const ms = require('ms')
 const config = require('./config')
 const init = require('./init')
 const lists = require('./route_handlers/lists')
@@ -16,7 +17,8 @@ let app = express()
 app.use(files.static())
 app.use(session({
   resave: false, saveUninitialized: false,
-  secret: config.session_secret
+  secret: config.session_secret,
+  cookie: {maxAge: ms('1 week')},
 }))
 app.use(passport.initialize())
 app.use(passport.session())

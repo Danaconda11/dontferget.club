@@ -25,6 +25,7 @@
     "lodash": "^4.17.4",
     "mailparser": "^2.1.0",
     "mongodb": "^3.0.0-rc0",
+    "ms": "^2.1.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "passport-wunderlist": "^1.0.1",
