@@ -21,6 +21,7 @@ h1, h2, h3, h4, h5, h6 { margin: 0 0 0.5rem 0; }
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 0.5em;;
+  margin-bottom: 1em;
 }
 .sidebar .list, .sidebar .clear_button {
   display: flex;
