@@ -64,7 +64,7 @@ const ClearButton = DropTarget('todo', {
 export default class Sidebar extends Component {
   constructor (props) {
     super(props)
-    this.state = {new_list: ''}
+    this.state = {new_list: '', open: false}
   }
   on_change (e) {
     let {target} = e
@@ -88,23 +88,32 @@ export default class Sidebar extends Component {
       }
       return 0
     })
+    let {open} = this.state
     return (
       <div className="sidebar">
-        {lists.map(list =>
-          <SidebarList key={list} list={list} active={list === current}/>
-        )}
+        <div className={`d-xs-flex d-sm-none ${open ? 'mb-2' : ''}`}>
+          <button className="btn btn-sm btn-default"
+            onClick={() => this.setState({open: !open})}>
+            Show lists
+          </button>
+          <i className="ml-auto fa fa-hamburger"/>
+        </div>
+        <div className={`lists ${!open ? 'd-none' : ''} d-sm-block`}>
+          {lists.map(list =>
+            <SidebarList key={list} list={list} active={list === current}/>)}
           <ClearButton/>
-        <div className="input-group">
-          <input name="new_list" className="form-control form-control-sm"
-            value={new_list} onChange={e=>this.on_change(e)}
-            placeholder="New list"/>
-          {new_list &&
-            <div className="input-group-btn">
-              <Link to={`/list/${new_list}`} className="btn btn-sm btn-primary"
-                onClick={() => this.setState({new_list: ''})}>
-                <i className="fa fa-plus"/>
-              </Link>
-            </div>}
+          <div className="input-group">
+            <input name="new_list" className="form-control form-control-sm"
+              value={new_list} onChange={e=>this.on_change(e)}
+              placeholder="New list"/>
+            {new_list &&
+              <div className="input-group-btn">
+                <Link to={`/list/${new_list}`} className="btn btn-sm btn-primary"
+                  onClick={() => this.setState({new_list: ''})}>
+                  <i className="fa fa-plus"/>
+                </Link>
+              </div>}
+          </div>
         </div>
       </div>
     )
