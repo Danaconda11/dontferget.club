@@ -5,6 +5,7 @@ legend:
 ? decision needed
 
 now:
+* (josh) mobile styles
 - (dan) properly handle 'all' when dragging todo items
 - (dan) remove from current list when dropping todo item
 - (dan) new page should show the pending list in the sidebar
