@@ -7,6 +7,7 @@ legend:
 now:
 - better mobile styles
 - debug 23s+ load times on app.js
+- loading prompts when data is loading
 - (dan) properly handle 'all' when dragging todo items
 - (dan) remove from current list when dropping todo item
 - (dan) new page should show the pending list in the sidebar
@@ -27,6 +28,7 @@ now:
 + (josh) support links in todo title
 soonish:
 - (dan) better signup page
+- offline friendly progressive web app
 later:
 - change password
 - setting to change sort order of lists
