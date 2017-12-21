@@ -1,10 +1,19 @@
 #!/bin/bash
 set -ue
+
+function err_ssh {
+  echo error: ssh authentication to www.dontferget.club failed. Please run the following
+  echo '$ eval $(ssh-agent -s) && ssh-add <key-file>'
+  exit 1
+}
+
 container_name=www.dontferget.club
 image_name=dontferget-wisp
 echo deploying webserver
 eval $(docker-machine env www.dontferget.club)
+ssh -o BatchMode=yes root@www.dontferget.club 'swapon /swap || :' || err_ssh
 docker build -t $image_name -f ./config/webserver.dockerfile .
+ssh -o BatchMode=yes root@www.dontferget.club 'swapoff /swap || :' || err_ssh
 docker rm -f $container_name || :
 docker run -d \
   --restart always \
