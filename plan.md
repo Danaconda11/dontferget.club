@@ -7,13 +7,13 @@ legend:
 now:
 - better mobile styles
 - debug 23s+ load times on app.js
-- loading prompts when data is loading
 - (dan) properly handle 'all' when dragging todo items
 - (dan) remove from current list when dropping todo item
 - (dan) new page should show the pending list in the sidebar
 - (dan) counter next to each list
 - (dan) alphabetize lists
 - (dan) new page should clear todo list
+* (josh) loading prompts when data is loading
 - (josh) remove from list when removing list tag
 - (josh) allow removing list from todo on mobile
 - (josh) re-order todos in list
