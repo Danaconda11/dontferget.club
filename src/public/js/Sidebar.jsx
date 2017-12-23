@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {NavLink, Link} from 'react-router-dom'
+import {withRouter} from 'react-router'
 import {DropTarget} from 'react-dnd'
+import PropTypes from 'prop-types'
 import api from './api.js'
 import _ from 'lodash'
 import { CSSTransitionGroup } from 'react-transition-group'
@@ -61,14 +63,21 @@ const ClearButton = DropTarget('todo', {
   canDrop: monitor.canDrop(),
 }))(render_clear)
 
-export default class Sidebar extends Component {
+class Sidebar extends Component {
   constructor (props) {
     super(props)
     this.state = {new_list: '', open: false}
+    this.navigate_new = this.navigate_new.bind(this)
   }
   on_change (e) {
     let {target} = e
     this.setState({[target.name]: target.value})
+  }
+  navigate_new (e) {
+    e.preventDefault()
+    let list = this.state.new_list
+    this.setState({new_list: ''}, () =>
+      this.props.history.push(`/list/${list}`))
   }
   render() {
     let {lists, current} = this.props
@@ -102,20 +111,24 @@ export default class Sidebar extends Component {
           {lists.map(list =>
             <SidebarList key={list} list={list} active={list === current}/>)}
           <ClearButton/>
-          <div className="input-group">
+          <form className="input-group" onSubmit={this.navigate_new}>
             <input name="new_list" className="form-control form-control-sm"
               value={new_list} onChange={e=>this.on_change(e)}
               placeholder="New list"/>
             {new_list &&
               <div className="input-group-btn">
-                <Link to={`/list/${new_list}`} className="btn btn-sm btn-primary"
-                  onClick={() => this.setState({new_list: ''})}>
+                <button className="btn btn-sm btn-primary">
                   <i className="fa fa-plus"/>
-                </Link>
+                </button>
               </div>}
-          </div>
+          </form>
         </div>
       </div>
     )
   }
 }
+Sidebar.propTypes = {
+  history: PropTypes.object.isRequired,
+}
+
+export default withRouter(Sidebar)
