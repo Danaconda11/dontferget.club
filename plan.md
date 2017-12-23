@@ -13,7 +13,7 @@ now:
 - (dan) counter next to each list
 - (dan) alphabetize lists
 - (dan) new page should clear todo list
-* (josh) loading prompts when data is loading
+* (josh) show faded dummy content while loading
 - (josh) remove from list when removing list tag
 - (josh) allow removing list from todo on mobile
 - (josh) re-order todos in list
