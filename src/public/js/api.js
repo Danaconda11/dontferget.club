@@ -15,6 +15,6 @@ export default async (url, options = {}) => {
   let res = await fetch(`/api${url}`, fetch_options)
   // HACK josh: read debug flag from config somehow, don't comment out code
   // normally
-  await new Promise(resolve => setTimeout(resolve, 1000)) // for debugging
+  // await new Promise(resolve => setTimeout(resolve, 2000)) // for debugging
   return res
 }

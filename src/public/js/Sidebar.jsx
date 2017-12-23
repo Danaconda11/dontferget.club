@@ -76,8 +76,12 @@ class Sidebar extends Component {
   navigate_new (e) {
     e.preventDefault()
     let list = this.state.new_list
-    this.setState({new_list: ''}, () =>
-      this.props.history.push(`/list/${list}`))
+    this.setState({new_list: ''}, () => {
+      // HACK josh: TodoApp should do the navigate, but I'm having trouble with
+      // e.preventDefault() and react synthetic events for onSibmit
+      this.props.history.push(`/list/${list}`)
+      this.props.onNewList(list)
+    })
   }
   render() {
     let {lists, current} = this.props

@@ -4,7 +4,7 @@ import SideBar from './Sidebar.jsx'
 import TodoList from './TodoList.jsx'
 import TodoEditor from './TodoEditor.jsx'
 import api_request from './api.js'
-import qs from 'query-string';
+import qs from 'query-string'
 const {assign} = Object
 
 export default class TodoApp extends Component {
@@ -58,6 +58,11 @@ export default class TodoApp extends Component {
       console.error(e)
     }
   }
+  async on_new_list (list) {
+    this.setState(prev => {
+      return assign({}, prev, {todos: []})
+    })
+  }
   componentDidMount() {
     this.get_todos()
     this.get_lists()
@@ -97,7 +102,8 @@ export default class TodoApp extends Component {
         <div className="col-sm-2">
           <SideBar
             current={this.props.match.params.list}
-            lists={lists}/>
+            lists={lists}
+            onNewList={list => this.on_new_list(list)}/>
         </div>
         <div className="col-sm">
           <TodoList
