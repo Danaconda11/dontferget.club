@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
-import Todo from './Todo.jsx'
+import Todo, {FakeTodo} from './Todo.jsx'
 
 export default class TodoList extends Component {
   constructor (props) {
@@ -9,7 +9,7 @@ export default class TodoList extends Component {
   }
   render () {
     let {new_todo} = this.state
-    let {name, todos, onTodoCreate, onTodoUpdate, showDone} = this.props
+    let {name, todos, loading, onTodoCreate, onTodoUpdate, showDone} = this.props
     return (
       <div>
         <div className="d-flex">
@@ -46,12 +46,18 @@ export default class TodoList extends Component {
           </div>
         </form>
         <ul className="todo_items">
-          {todos.map(todo =>
-            <Todo
-              key={todo._id}
-              onUpdate={onTodoUpdate}
-              todo={todo}
-              list={name}/>)}
+          {loading ?
+            <div>
+              <FakeTodo text="Milk" list={name}/>
+              <FakeTodo text="Bread" list={name}/>
+              <FakeTodo text="Cheese" list={name}/>
+            </div> :
+            todos.map(todo =>
+              <Todo
+                key={todo._id}
+                onUpdate={onTodoUpdate}
+                todo={todo}
+                list={name}/>)}
         </ul>
       </div>
     )

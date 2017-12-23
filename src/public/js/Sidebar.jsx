@@ -18,6 +18,13 @@ const render_nav_link = ({canDrop, isOver, connectDropTarget, list, active}) => 
   </div>
 )
 
+const FakeNavLink = ({name}) => (
+  <div className="list fake">
+    {name}
+    <i className={'ml-auto as-center fa fa-bullseye'}/>
+  </div>
+)
+
 const render_clear = ({canDrop, isOver, connectDropTarget, list, active}) => connectDropTarget(
   <div>
     {canDrop &&
@@ -102,6 +109,17 @@ class Sidebar extends Component {
       return 0
     })
     let {open} = this.state
+    let loading = !lists.length
+    if (loading) {
+      return (
+        <div className="sidebar">
+          <div className="lists">
+            <FakeNavLink name="Inbox"/>
+            <FakeNavLink name="All"/>
+          </div>
+        </div>
+      )
+    }
     return (
       <div className="sidebar">
         <div className={`d-xs-flex d-sm-none ${open ? 'mb-2' : ''}`}>

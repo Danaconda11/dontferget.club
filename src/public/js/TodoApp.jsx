@@ -16,9 +16,10 @@ export default class TodoApp extends Component {
   }
   list (props) { return (props || this.props).match.params.list }
   async get_todos() {
+    this.setState({todos_loading: true})
     try {
       let todos = await (await api_request(`/lists/${this.list()}/todos`)).json()
-      this.setState({todos})
+      this.setState({todos, todos_loading: false})
     } catch (e) {
       console.error(e)
     }
@@ -94,7 +95,7 @@ export default class TodoApp extends Component {
     }
   }
   render() {
-    let {lists, todos, focused_todo} = this.state
+    let {lists, todos, todos_loading, focused_todo} = this.state
     let [completed, in_progress] = _.partition(todos, todo => todo.completed)
     let {done} = qs.parse(this.props.location.search)
     return (
@@ -108,6 +109,7 @@ export default class TodoApp extends Component {
         <div className="col-sm">
           <TodoList
             name={this.list()}
+            loading={todos_loading}
             showDone={done}
             todos={done ? completed : in_progress}
             onTodoCreate={this.create_todo}

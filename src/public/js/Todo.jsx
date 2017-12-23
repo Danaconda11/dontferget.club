@@ -47,4 +47,18 @@ let monitor = (connect, monitor) => ({
   isDragging: monitor.isDragging(),
 })
 Todo = withRouter(DragSource('todo', spec, monitor)(Todo))
-export default Todo
+
+function FakeTodo ({text, list}) {
+  return (
+    <li className="todo_item fake">
+      <i className="fa fa-bars drag_handle"/>
+      <input type="checkbox" disabled={true}/>
+      {text}
+      <div className="lists">
+        <span className="badge badge-secondary list_label">{list}</span>
+      </div>
+    </li>
+  )
+}
+
+export {FakeTodo, Todo as default}

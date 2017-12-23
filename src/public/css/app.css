@@ -53,6 +53,7 @@ h1, h2, h3, h4, h5, h6 { margin: 0 0 0.5rem 0; }
 .sidebar .list.active .fa { color: white }
 .sidebar .list.droppable .fa { opacity: 1; }
 .sidebar .list.drop_hover { left: 10px; }
+.sidebar .list.fake { color: var(--gray); cursor: not-allowed; }
 
 .clear_button { transition: all var(--fade_time); color: #fff; }
 .clear_button.active  { background: #be1030; color: #ddd; }
@@ -89,8 +90,9 @@ h1, h2, h3, h4, h5, h6 { margin: 0 0 0.5rem 0; }
 .list_label:hover .remove { display: inline-block; }
 .list_label .remove:hover { color: red; }
 .todo_item input[type="checkbox"] { margin-right: 0.5em; }
-.todo_item.completed span { color: #999; text-decoration: line-through; }
+.todo_item.completed span { color: var(--gray); text-decoration: line-through; }
 .todo_item.dragging { opacity: 0.5; }
+.todo_item.fake { color: var(--gray); cursor: not-allowed; }
 .lists { margin-left: auto; }
 .pretty_input { cursor: pointer; position: relative; }
 .pretty_input .edit {
