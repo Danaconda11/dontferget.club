@@ -31,13 +31,13 @@ E.get_all = util.http_handler(async (req, res, next) => {
 E.update = (req, res, next) => {
   let update = req.body
   let id = req.params.id
-  if (!id || _.isEmpty(update)) {
-    return res.status(400).json({ error: 'Invalid update' })
-  }
   update = _(update).toPairs()
   .filter(([k]) => ['notes', 'title', 'completed', 'list'].includes(k))
   .fromPairs()
   .value()
+  if (!id || _.isEmpty(update)) {
+    return res.status(400).json({ error: 'Invalid update' })
+  }
   return todos.update(id, update).then(result => {
     return todos.find_by_id(id)
   }).then(todo => {
