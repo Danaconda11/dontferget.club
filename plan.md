@@ -31,6 +31,13 @@ soonish:
 - (dan) better signup page
 - offline friendly progressive web app
 later:
+- support partial import from wunderlist with UI
+- support google keep import
+- extra auth:
+  - google
+  - twitter
+  - github (can we have nice github integration? issues perhaps?)
+  - reddit?
 - change password
 - setting to change sort order of lists
 - todo attachments
