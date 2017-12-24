@@ -29,9 +29,8 @@ E.get_all = util.http_handler(async (req, res, next) => {
 })
 
 E.update = (req, res, next) => {
-  let update = req.body
   let id = req.params.id
-  update = _(update).toPairs()
+  let update = _(req.body).toPairs()
   .filter(([k]) => ['notes', 'title', 'completed', 'list'].includes(k))
   .fromPairs()
   .value()
