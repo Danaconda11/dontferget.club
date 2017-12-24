@@ -46,6 +46,7 @@ let monitor = (connect, monitor) => ({
 	connectDragSource: connect.dragSource(),
   isDragging: monitor.isDragging(),
 })
+// CONTINUE josh: allow drag and drop re-ordering of todo items
 Todo = withRouter(DragSource('todo', spec, monitor)(Todo))
 
 function FakeTodo ({text, list}) {

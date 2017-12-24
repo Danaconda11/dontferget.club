@@ -45,9 +45,10 @@ const render_clear = ({canDrop, isOver, connectDropTarget, list, active}) => con
 const SidebarList = DropTarget('todo', {
   drop (props, monitor) {
     let todo = monitor.getItem()
+    // HACK josh: modifying object in place is not the correct way to do this.
+    // Add some sort of update bus
     todo.list = _.uniq((todo.list || []).concat([props.list]))
     api(`/todos/${todo._id}`, {method: 'PATCH', body: todo})
-    // TODO josh: handle update responses
   },
 }, (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),

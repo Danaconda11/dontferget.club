@@ -32,6 +32,7 @@ let promise_map = (array, fn) => {
   })
 }
 
+// TODO josh: move to src/import/wunderlist.js
 let sync_wunderlist = user => mongo.connect().then(db => {
   let api = new Wunderlist({
     accessToken: _.get(user, 'external.wunderlist.access_token'),
@@ -98,6 +99,8 @@ E.import = (req, res, next) => mongo.connect().then(db => {
   })
 })
 
+// TODO josh: merge in metadata info from 'lists' collection
+// TODO josh: extract mongo interaction into src/list.js
 E.get_all = util.http_handler(async (req, res, next) => {
   let db = await mongo.connect()
   let lists = await db.collection('todos').distinct('list',
@@ -105,4 +108,30 @@ E.get_all = util.http_handler(async (req, res, next) => {
   lists.unshift('Inbox')
   lists.push('All')
   res.json(_.uniq(lists))
+})
+
+// TODO josh: extract mongo interaction into src/list.js
+E.get = util.http_handler(async (req, res, next) => {
+  let db = await mongo.connect()
+  res.json(await db.collection('lists').findOne({
+    list_id: req.params.list,
+    user_id: req.user._id,
+  }))
+})
+
+// TODO josh: extract mongo interaction into src/list.js
+E.update = util.http_handler(async (req, res, next) => {
+  let db = await mongo.connect()
+  let update = _(req.body).toPairs()
+  .filter(([k]) => ['sort'].includes(k))
+  .fromPairs()
+  .value()
+  if (_.isEmpty(update)) {
+    return res.status(400).json({ error: 'Invalid update' })
+  }
+  await db.collection('lists').update({
+    list_id: req.params.list,
+    user_id: req.user._id,
+  }, {$set: update}, {upsert: true})
+  res.end()
 })

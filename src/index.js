@@ -46,7 +46,11 @@ app.get('/account', files.send_file('index.html'))
 // TODO josh: ^ configure list of urls that will send front end app
 app.get('/api/account', user.logged_in)
 app.get('/api/lists', lists.get_all)
+// TODO josh: migrate this to POST /api/lists?source=wunderlist to be more
+// REST compilant
 app.post('/api/lists/import', lists.import)
+app.get('/api/lists/:list', lists.get)
+app.patch('/api/lists/:list', lists.update)
 app.get('/api/lists/:list/todos', todos.get_all)
 app.post('/api/todos', todos.add)
 app.get('/api/todos/:id', todos.get)
