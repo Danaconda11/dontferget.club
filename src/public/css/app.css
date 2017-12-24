@@ -48,10 +48,7 @@ h1, h2, h3, h4, h5, h6 { margin: 0 0 0.5rem 0; }
   transition: opacity var(--fade_time) ease-in;
 }
 
-.sidebar .list .fa { opacity: 0; transition: all var(--fade_time); color: #0277bd; }
 .sidebar .list.active  { background: #0277bd; color: #ddd; }
-.sidebar .list.active .fa { color: white }
-.sidebar .list.droppable .fa { opacity: 1; }
 .sidebar .list.drop_hover { left: 10px; }
 .sidebar .list.fake { color: var(--gray); cursor: not-allowed; }
 

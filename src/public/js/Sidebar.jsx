@@ -13,16 +13,12 @@ const render_nav_link = ({canDrop, isOver, connectDropTarget, list, active}) => 
       className={'list' + (canDrop ? ' droppable' : '') +
         (isOver ? ' drop_hover' : '') + (active ? ' active' : '')}>
       {list}
-      <i className={'ml-auto as-center fa fa-bullseye '}/>
     </Link>
   </div>
 )
 
 const FakeNavLink = ({name}) => (
-  <div className="list fake">
-    {name}
-    <i className={'ml-auto as-center fa fa-bullseye'}/>
-  </div>
+  <div className="list fake">{name}</div>
 )
 
 const render_clear = ({canDrop, isOver, connectDropTarget, list, active}) => connectDropTarget(
@@ -39,7 +35,8 @@ const render_clear = ({canDrop, isOver, connectDropTarget, list, active}) => con
           className={'clear_button btn btn-sm btn-danger'
             + (canDrop ? ' droppable' : '')
             + (isOver ? ' drop_hover ' : '')
-            + (active ? ' active ' : '')}>Clear lists <i className={"ml-auto as-center fa fa-bullseye"}/>
+            + (active ? ' active ' : '')}>
+          Clear lists
         </div>
       </CSSTransitionGroup>}
   </div>
