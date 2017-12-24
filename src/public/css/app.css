@@ -48,7 +48,6 @@ h1, h2, h3, h4, h5, h6 { margin: 0 0 0.5rem 0; }
 .clear_button { transition: all var(--fade_time); color: #fff; }
 .clear_button.active  { background: #be1030; color: #ddd; }
 .clear_button.drop_hover { left: 10px; }
-.blue { color: #0277bd; }
 .new_todo {
   display: inline-flex;
   padding: 0;
