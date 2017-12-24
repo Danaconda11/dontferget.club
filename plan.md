@@ -28,6 +28,7 @@ now:
 + (josh) review state stores
 + (josh) support links in todo title
 soonish:
+- (josh) enable babel-preset-env and compress production app.js
 - (dan) better signup page
 - offline friendly progressive web app
 later:
