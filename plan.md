@@ -14,12 +14,12 @@ now:
 - (dan) counter next to each list
 - (dan) alphabetize lists
 - (dan) new page should clear todo list
-* (josh) show faded dummy content while loading
-- (josh) remove from list when removing list tag
 - (josh) allow removing list from todo on mobile
 - (josh) re-order todos in list
 - (josh) support links in todo body
 ? (josh) when viewing list, filter out labels for current list
++ (josh) remove from list when removing list tag
++ (josh) show faded dummy content while loading
 + (josh) allow removing lists with button
 + (josh) mvp mobile styles
 + (josh) improve single todo editor styles

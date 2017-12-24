@@ -41,6 +41,7 @@ export default class TodoApp extends Component {
     }
   }
   async on_todo_update (id, update) {
+    let list = this.list()
     try {
       let res = await api_request(`/todos/${id}`, {method: 'PATCH', body: update})
       if (res.status !== 200) {
@@ -50,7 +51,8 @@ export default class TodoApp extends Component {
       this.setState(prev => {
         let focused = prev.focused_todo
         return assign({}, prev, {
-          todos: prev.todos.map(_todo => _todo._id !== todo._id ? _todo : todo),
+          todos: prev.todos.map(_todo => _todo._id !== todo._id ? _todo : todo)
+            .filter(todo => todo.list.includes(list)),
           focused_todo: focused && focused._id === todo._id ? todo : focused,
         })
       })
