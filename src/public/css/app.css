@@ -1,7 +1,6 @@
 :root {
   --fade_time: 300ms;
 }
-
 h1, h2, h3, h4, h5, h6 { margin: 0 0 0.5rem 0; }
 .clickable { cursor: pointer; }
 .app { padding: 0 1em; margin-left: 0; }
@@ -38,28 +37,18 @@ h1, h2, h3, h4, h5, h6 { margin: 0 0 0.5rem 0; }
   left: 0;
   transition: left var(--fade_time);
 }
-
-.fade-appear {
-  opacity: 0.01;
-}
-
+.fade-appear { opacity: 0.01; }
 .fade-appear.fade-appear-active {
   opacity: 1;
   transition: opacity var(--fade_time) ease-in;
 }
-
 .sidebar .list.active  { background: #0277bd; color: #ddd; }
 .sidebar .list.drop_hover { left: 10px; }
 .sidebar .list.fake { color: var(--gray); cursor: not-allowed; }
-
 .clear_button { transition: all var(--fade_time); color: #fff; }
 .clear_button.active  { background: #be1030; color: #ddd; }
 .clear_button.drop_hover { left: 10px; }
-
-.blue {
-  color: #0277bd;
-}
-
+.blue { color: #0277bd; }
 .new_todo {
   display: inline-flex;
   padding: 0;
