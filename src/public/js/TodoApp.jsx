@@ -48,6 +48,7 @@ export default class TodoApp extends Component {
         throw new Error('Not updated correctly')
       }
       let todo = await res.json()
+      // TODO josh: replace this with a proper reducer function
       this.setState(prev => {
         let focused = prev.focused_todo
         return assign({}, prev, {
@@ -65,6 +66,10 @@ export default class TodoApp extends Component {
     this.setState(prev => {
       return assign({}, prev, {todos: []})
     })
+  }
+  async on_sort (todo, new_index) {
+    // CONTINUE josh: finish drag and drop sorting
+    console.log('moving', todo._id, 'to', new_index)
   }
   componentDidMount() {
     this.get_todos()
@@ -115,7 +120,8 @@ export default class TodoApp extends Component {
             showDone={done}
             todos={done ? completed : in_progress}
             onTodoCreate={this.create_todo}
-            onTodoUpdate={this.on_todo_update}/>
+            onTodoUpdate={this.on_todo_update}
+            onSort={this.on_sort}/>
         </div>
         <Route path="/list/:list/:todo" render={() =>
           <div className="col-md-4">

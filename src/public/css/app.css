@@ -66,6 +66,8 @@ h1, h2, h3, h4, h5, h6 { margin: 0 0 0.5rem 0; }
   cursor: pointer;
 }
 .todo_item .drag_handle { margin-right: 0.5em; color: #aaa; cursor: grab; }
+.todo_item.drop_hover_top { border-top: 1px solid blue; }
+.todo_item.drop_hover_bottom { border-bottom: 1px solid blue; }
 .list_label { margin-left: 0.5em; }
 .list_label .remove {
   border-left: 1px solid white;

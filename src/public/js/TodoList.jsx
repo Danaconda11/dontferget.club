@@ -5,10 +5,17 @@ import Todo, {FakeTodo} from './Todo.jsx'
 export default class TodoList extends Component {
   constructor (props) {
     super(props)
-    this.state = {new_todo: ''}
+    this.state = {new_todo: '', hover_index: null}
+    this.on_drop_hover = this.on_drop_hover.bind(this)
+    this.on_drop = this.on_drop.bind(this)
+  }
+  on_drop_hover (index) { this.setState({hover_index: index}) }
+  on_drop (...args) {
+    this.setState({hover_index: null})
+    this.props.onSort(...args)
   }
   render () {
-    let {new_todo} = this.state
+    let {new_todo, hover_index} = this.state
     let {name, todos, loading, onTodoCreate, onTodoUpdate, showDone} = this.props
     return (
       <div>
@@ -52,10 +59,14 @@ export default class TodoList extends Component {
               <FakeTodo text="Bread" list={name}/>
               <FakeTodo text="Cheese" list={name}/>
             </div> :
-            todos.map(todo =>
+            todos.map((todo, i) =>
               <Todo
                 key={todo._id}
+                index={i}
                 onUpdate={onTodoUpdate}
+                hoverIndex={hover_index}
+                onDropHover={this.on_drop_hover}
+                onSort={this.on_drop}
                 todo={todo}
                 list={name}/>)}
         </ul>
