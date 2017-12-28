@@ -68,7 +68,7 @@ let target_actions = {
     let {height: el_height, y: el_y} =
       findDOMNode(component).getBoundingClientRect()
     let midpoint = el_y+(el_height/2)
-    onSort(todo, y>=midpoint ? index+1 : index, todo)
+    onSort(todo, y>=midpoint ? index+1 : index)
   },
 }
 Todo = _.flow([

@@ -16,7 +16,9 @@ export default class TodoList extends Component {
   }
   render () {
     let {new_todo, hover} = this.state
-    let {name, todos, loading, onTodoCreate, onTodoUpdate, showDone} = this.props
+    let {name, todos, loading, onTodoCreate, onTodoUpdate, showDone,
+      list} = this.props
+    let {sort} = (list||{})
     let _todos = todos.slice()
     if (hover) {
       let current_index = todos.findIndex(t => t._id==hover.todo._id)
@@ -25,6 +27,22 @@ export default class TodoList extends Component {
           Object.assign({is_ghost: true}, hover.todo))
       }
     }
+    // TODO josh: sort in TodoApp to avoid resorting the list every render
+    _todos = _todos.sort((a, b) => {
+      if (!sort || a.is_ghost || b.is_ghost ||
+        (!sort.includes(a._id) && !sort.includes(b._id)))
+      {
+        return
+      }
+      // todos not in the sort order get pushed to the top of the list
+      if (!sort.includes(a._id)) {
+        return -1
+      }
+      if (!sort.includes(b._id)) {
+        return -1
+      }
+      return sort.indexOf(a._id) - sort.indexOf(b._id)
+    })
     return (
       <div>
         <div className="d-flex">

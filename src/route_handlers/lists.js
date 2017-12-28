@@ -133,5 +133,8 @@ E.update = util.http_handler(async (req, res, next) => {
     list_id: req.params.list,
     user_id: req.user._id,
   }, {$set: update}, {upsert: true})
-  res.end()
+  res.json(await db.collection('lists').findOne({
+    list_id: req.params.list,
+    user_id: req.user._id,
+  }))
 })
