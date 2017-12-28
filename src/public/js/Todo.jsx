@@ -6,8 +6,10 @@ import {isWebUri} from 'valid-url'
 import {withRouter} from 'react-router-dom'
 import _ from 'lodash'
 
+// TODO josh: split GhostTodo out of Todo
+// TODO josh: merge FakeTodo into GhostTodo
 function Todo ({isDragging, connectDragSource, connectDropTarget, todo, list,
-  onUpdate, history, hoverIndex, index})
+  onUpdate, history, hoverIndex, index, isGhost})
 {
   if (!todo) {
     return null
@@ -23,8 +25,7 @@ function Todo ({isDragging, connectDragSource, connectDropTarget, todo, list,
     // TODO josh: investigate react class generation shorthands
     <li className={'todo_item' + (todo.completed ? ' completed' : '') +
       (isDragging ? ' dragging' : '') +
-      (hoverIndex === index+1 ? ' drop_hover_bottom' : '') +
-      (hoverIndex === 0 && index === 0 ? ' drop_hover_top' : '')} onClick={navigate}>
+      (isGhost ? ' ghost' : '')} onClick={navigate}>
       <i className="fa fa-bars drag_handle"/>
       <input type="checkbox" defaultChecked={todo.completed}
         onChange={e => onUpdate(todo._id, {completed: e.target.checked})} />
@@ -46,23 +47,28 @@ function Todo ({isDragging, connectDragSource, connectDropTarget, todo, list,
 }
 
 let source_actions = {
-  beginDrag (props) { return {todo: props.todo, index: props.index} },
+  beginDrag (props) { return props.todo },
 }
 let target_actions = {
-  hover ({index, onDropHover}, monitor, component) {
+  hover (props, monitor, component) {
+    let {index, onDropHover, isGhost, todo} = props
+    let hovering_todo = monitor.getItem()
+    if (isGhost || todo._id === hovering_todo._id) {
+      return
+    }
     let {x, y} = monitor.getClientOffset()
     let {height: el_height, y: el_y} =
       findDOMNode(component).getBoundingClientRect()
     let midpoint = el_y+(el_height/2)
-    onDropHover(y>=midpoint ? index+1 : index)
+    onDropHover(y>=midpoint ? index+1 : index, hovering_todo)
   },
   drop ({index, onSort}, monitor, component) {
-    let {todo} = monitor.getItem()
+    let todo = monitor.getItem()
     let {x, y} = monitor.getClientOffset()
     let {height: el_height, y: el_y} =
       findDOMNode(component).getBoundingClientRect()
     let midpoint = el_y+(el_height/2)
-    onSort(todo, y>=midpoint ? index+1 : index)
+    onSort(todo, y>=midpoint ? index+1 : index, todo)
   },
 }
 Todo = _.flow([

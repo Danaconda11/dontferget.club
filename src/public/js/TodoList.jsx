@@ -5,18 +5,26 @@ import Todo, {FakeTodo} from './Todo.jsx'
 export default class TodoList extends Component {
   constructor (props) {
     super(props)
-    this.state = {new_todo: '', hover_index: null}
+    this.state = {new_todo: '', hover: null}
     this.on_drop_hover = this.on_drop_hover.bind(this)
     this.on_drop = this.on_drop.bind(this)
   }
-  on_drop_hover (index) { this.setState({hover_index: index}) }
+  on_drop_hover (index, todo) { this.setState({hover: {index, todo}}) }
   on_drop (...args) {
-    this.setState({hover_index: null})
+    this.setState({hover: null})
     this.props.onSort(...args)
   }
   render () {
-    let {new_todo, hover_index} = this.state
+    let {new_todo, hover} = this.state
     let {name, todos, loading, onTodoCreate, onTodoUpdate, showDone} = this.props
+    let _todos = todos.slice()
+    if (hover) {
+      let current_index = todos.findIndex(t => t._id==hover.todo._id)
+      if (![current_index, current_index+1].includes(hover.index)) {
+        _todos.splice(hover.index, 0,
+          Object.assign({is_ghost: true}, hover.todo))
+      }
+    }
     return (
       <div>
         <div className="d-flex">
@@ -34,7 +42,7 @@ export default class TodoList extends Component {
         </div>
         <form onSubmit={e => {
           e.preventDefault()
-            let todo = {title: new_todo, completed: false}
+          let todo = {title: new_todo, completed: false}
           if (name && name !== 'all') {
             todo.list = [name]
           }
@@ -59,12 +67,12 @@ export default class TodoList extends Component {
               <FakeTodo text="Bread" list={name}/>
               <FakeTodo text="Cheese" list={name}/>
             </div> :
-            todos.map((todo, i) =>
+            _todos.map((todo, i) =>
               <Todo
-                key={todo._id}
+                key={todo.is_ghost ? 'ghost' : todo._id}
                 index={i}
                 onUpdate={onTodoUpdate}
-                hoverIndex={hover_index}
+                isGhost={todo.is_ghost}
                 onDropHover={this.on_drop_hover}
                 onSort={this.on_drop}
                 todo={todo}

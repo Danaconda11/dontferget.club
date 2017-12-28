@@ -66,8 +66,6 @@ h1, h2, h3, h4, h5, h6 { margin: 0 0 0.5rem 0; }
   cursor: pointer;
 }
 .todo_item .drag_handle { margin-right: 0.5em; color: #aaa; cursor: grab; }
-.todo_item.drop_hover_top { border-top: 1px solid blue; }
-.todo_item.drop_hover_bottom { border-bottom: 1px solid blue; }
 .list_label { margin-left: 0.5em; }
 .list_label .remove {
   border-left: 1px solid white;
@@ -78,6 +76,7 @@ h1, h2, h3, h4, h5, h6 { margin: 0 0 0.5rem 0; }
 .list_label .remove:hover { color: red; }
 .todo_item input[type="checkbox"] { margin-right: 0.5em; }
 .todo_item.completed span { color: var(--gray); text-decoration: line-through; }
+.todo_item.ghost { opacity: 0.5; }
 .todo_item.dragging { opacity: 0.5; }
 .todo_item.fake { color: var(--gray); cursor: not-allowed; }
 .lists { margin-left: auto; }
