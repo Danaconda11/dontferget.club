@@ -74,7 +74,7 @@ h1, h2, h3, h4, h5, h6 { margin: 0 0 0.5rem 0; }
 }
 .list_label:hover .remove { display: inline-block; }
 .list_label .remove:hover { color: red; }
-.todo_item input[type="checkbox"] { margin-right: 0.5em; }
+.todo_item [type="checkbox"] { margin-right: 0.5em; vertical-align: middle; }
 .todo_item.completed span { color: var(--gray); text-decoration: line-through; }
 .todo_item.ghost { opacity: 0.5; }
 .todo_item.dragging { opacity: 0.5; }
@@ -109,3 +109,8 @@ h1, h2, h3, h4, h5, h6 { margin: 0 0 0.5rem 0; }
   box-sizing: content-box;
 }
 .todo_editor h4 { line-height: 1.5; border-bottom: 1px solid transparent; }
+
+@media screen and (max-width: 574px) {
+  .todo_item { font-size: 115%; }
+  .todo_item [type="checkbox"] { width: 20px; height: 20px; }
+}
