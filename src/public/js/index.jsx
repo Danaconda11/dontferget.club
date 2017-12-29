@@ -5,11 +5,12 @@ import Navbar from './Navbar.jsx'
 import TodoApp from './TodoApp.jsx'
 import AccountPage from './AccountPage.jsx'
 import createBrowserHistory from 'history/createBrowserHistory'
-import HTML5Backend from 'react-dnd-html5-backend'
+import MultiBackend from 'react-dnd-multi-backend'
+import Html5ToTouch from 'react-dnd-multi-backend/lib/HTML5toTouch'
 import {DragDropContextProvider} from 'react-dnd'
 
 let app =
-  <DragDropContextProvider backend={HTML5Backend}>
+  <DragDropContextProvider backend={MultiBackend(Html5ToTouch)}>
     <Router history={createBrowserHistory()}>
       <div className="app container-fluid">
         <Navbar/>

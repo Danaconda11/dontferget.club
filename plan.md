@@ -8,17 +8,22 @@ now:
 - better mobile styles
 - debug 23s+ load times on app.js
 - lists with no active todos should be in a seperate "completed" sidebar section
-- make drag and drop work on mobile
+- show better drag preview on mobile
 - (dan) properly handle 'all' when dragging todo items
 - (dan) remove from current list when dropping todo item
 - (dan) new page should show the pending list in the sidebar
 - (dan) counter next to each list
 - (dan) alphabetize lists
 - (dan) new page should clear todo list
-* (josh) re-order todos in list
+* (josh) supprt read only lists
+  * public
+  - private
+- (josh) support sublists
 - (josh) allow removing list from todo on mobile
 - (josh) support links in todo body
 ? (josh) when viewing list, filter out labels for current list
++ (josh) re-order todos in list
++ (josh) make drag and drop work on mobile
 + (josh) remove from list when removing list tag
 + (josh) show faded dummy content while loading
 + (josh) allow removing lists with button
