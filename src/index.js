@@ -10,10 +10,12 @@ const body_parser = require('body-parser')
 const passport = require('./passport')
 const util = require('./route_handlers/util')
 const session = require('express-session')
+const compression = require('compression')
 const todos = require('./route_handlers/todos')
 const chess = require('./route_handlers/lichess')
 
 let app = express()
+app.use(compression())
 app.use(files.static())
 app.use(session({
   resave: false, saveUninitialized: false,

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "concurrently \"nodemon --inspect=0.0.0.0 index --ignore 'public/**'\" \"npm run build:js\"",
     "build:js": "webpack -dw",
-    "build:production": "webpack",
+    "build:production": "webpack -p",
     "haraka": "haraka -c haraka",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,6 +17,7 @@
     "Haraka": "^2.8.16",
     "bcrypt": "^1.0.3",
     "body-parser": "^1.17.2",
+    "compression": "^1.7.1",
     "deep-freeze": "0.0.1",
     "express": "^4.15.3",
     "express-session": "^1.15.3",
@@ -41,6 +42,7 @@
     "babel": "^6.23.0",
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "concurrently": "^3.5.0",
     "css-loader": "^0.28.7",
