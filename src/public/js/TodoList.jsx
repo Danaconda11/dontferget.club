@@ -1,13 +1,23 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import Todo, {FakeTodo} from './Todo.jsx'
+// TODO josh: consider lazy-loading react-modal, react-toggle
+import Modal from 'react-modal'
+import Toggle from 'react-toggle'
+import 'react-toggle/style.css'
+import CopyUrl from './CopyUrl.jsx'
 
 export default class TodoList extends Component {
   constructor (props) {
     super(props)
-    this.state = {new_todo: '', hover: null}
+    this.state = {new_todo: '', hover: null, view_settings: false}
     this.on_drop_hover = this.on_drop_hover.bind(this)
     this.on_drop = this.on_drop.bind(this)
+    this.on_sharing_update = this.on_sharing_update.bind(this)
+  }
+  on_sharing_update (e) {
+    this.props.onListUpdate(this.props.list.name,
+      {[`sharing.${e.target.name}`]: e.target.checked})
   }
   on_drop_hover (index, todo) { this.setState({hover: {index, todo}}) }
   on_drop (...args) {
@@ -15,10 +25,13 @@ export default class TodoList extends Component {
     this.props.onSort(...args)
   }
   render () {
-    let {new_todo, hover} = this.state
-    let {name, todos, loading, onTodoCreate, onTodoUpdate, showDone,
-      list} = this.props
-    let {sort} = (list||{})
+    let {new_todo, hover, view_settings} = this.state
+    let {todos, loading, onTodoCreate, onTodoUpdate, showDone, list} = this.props
+    if (!list) {
+      // TODO josh: extract generic <Loading/>
+      return <p>Loading...</p>
+    }
+    let {sort, sharing} = list
     let _todos = todos.slice()
     if (hover) {
       let current_index = todos.findIndex(t => t._id==hover.todo._id)
@@ -43,26 +56,29 @@ export default class TodoList extends Component {
       }
       return sort.indexOf(a._id) - sort.indexOf(b._id)
     })
+    // TODO josh: split out <ListSettings/>
     return (
-      <div>
-        <div className="d-flex">
-          <h3>{name}</h3>
+      <div className="todo_list">
+        <header className="d-flex">
+          <h3 className="mr-2">{list.name}</h3>
+          <i className="settings_icon fa fa-gear"
+            onClick={() => this.setState({view_settings: true})}/>
           <div className="ml-auto">
             <Link className={'btn btn-sm ' + (showDone ? 'btn-link' : 'btn-primary')}
-              to={`/list/${name}`}>
+              to={`/list/${list.name}`}>
               Doing
             </Link>
             <Link className={'btn btn-sm ' + (!showDone ? 'btn-link' : 'btn-primary')}
-              to={`/list/${name}?done=true`}>
+              to={`/list/${list.name}?done=true`}>
               Done
             </Link>
           </div>
-        </div>
+        </header>
         <form onSubmit={e => {
           e.preventDefault()
           let todo = {title: new_todo, completed: false}
-          if (name && name !== 'all') {
-            todo.list = [name]
+          if (list.name && list.name !== 'all') {
+            todo.list = [list.name]
           }
           this.setState({new_todo: ''})
           onTodoCreate(todo)
@@ -81,9 +97,9 @@ export default class TodoList extends Component {
         <ul className="todo_items">
           {loading ?
             <div>
-              <FakeTodo text="Milk" list={name}/>
-              <FakeTodo text="Bread" list={name}/>
-              <FakeTodo text="Cheese" list={name}/>
+              <FakeTodo text="Milk" list={list.name}/>
+              <FakeTodo text="Bread" list={list.name}/>
+              <FakeTodo text="Cheese" list={list.name}/>
             </div> :
             _todos.map((todo, i) =>
               <Todo
@@ -94,8 +110,25 @@ export default class TodoList extends Component {
                 onDropHover={this.on_drop_hover}
                 onSort={this.on_drop}
                 todo={todo}
-                list={name}/>)}
+                list={list.name}/>)}
         </ul>
+        <Modal isOpen={view_settings} ariaHideApp={false}
+          onRequestClose={() => this.setState({view_settings: false})}>
+          <h3>{list.name} settings</h3>
+          <h4>Sharing</h4>
+          <div className="d-flex ai-center">
+            <Toggle name="public" id="public_sharing" className="mr-1"
+              checked={sharing.public} onChange={this.on_sharing_update}/>
+            <label className="mr-1" htmlFor="public_sharing">Public</label>
+            {sharing.public && <CopyUrl>{`https://dontferget.club/list/${list.uuid}`}</CopyUrl>}
+          </div>
+          <div className="d-flex ai-center">
+            <Toggle name="private" id="private_sharing" className="mr-1"
+              checked={!!sharing.private} onChange={this.on_sharing_update}/>
+            <label className="mr-1" htmlFor="private_sharing">Private</label>
+            {sharing.private && <CopyUrl>{`https://dontferget.club/list/${sharing.private}`}</CopyUrl>}
+          </div>
+        </Modal>
       </div>
     )
   }

@@ -1,8 +1,16 @@
 :root {
   --fade_time: 300ms;
 }
+/* Library Hotfix */
+/* bootstrap makes inputs z-index: 3 for some reason */
+.ReactModal__Overlay { z-index: 10; }
+/* react-toggle breaks in .d-flex without this */
+.react-toggle { height: 24px; }
+/* General */
 h1, h2, h3, h4, h5, h6 { margin: 0 0 0.5rem 0; }
+/* Utility */
 .clickable { cursor: pointer; }
+/* Component Specific */
 .app { padding: 0 1em; margin-left: 0; }
 .navbar { margin-bottom: 0.5em; justify-content: flex-start; padding: 0; }
 .nav-item, .nav-item:visited {
@@ -56,6 +64,9 @@ h1, h2, h3, h4, h5, h6 { margin: 0 0 0.5rem 0; }
   margin: 0;
 }
 .new_todo input { margin: 0; }
+.todo_list header { align-items: center; }
+.todo_list .settings_icon { color: #aaa; cursor: pointer; transition: color var(--fade_time); }
+.todo_list .settings_icon:hover { color: #111; }
 .todo_items { padding: 0; margin: 0 0 2em 0; }
 .todo_item {
   display: flex;
