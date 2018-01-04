@@ -77,6 +77,7 @@ export default class TodoApp extends Component {
       return assign({}, prev, {todos: []})
     })
   }
+  // TODO josh: merge into on_list_update
   async on_sort (todo, new_index) {
     try {
       let todos = this.state.todos
@@ -132,12 +133,9 @@ export default class TodoApp extends Component {
     }
   }
   async on_list_update (id, update) {
-    this.setState(prev => {
-      let focused_list = cloneDeep(prev.focused_list)
-      each(update, (v, k) => set(focused_list, k, v))
-      let new_state = assign({}, prev, {focused_list})
-      return new_state
-    })
+    let list = await (await api_request(`/lists/${id}`,
+      {method: 'PATCH', body: update})).json()
+    this.setState({focused_list: list})
   }
   render() {
     let {lists, todos, todos_loading, focused_todo, focused_list} = this.state

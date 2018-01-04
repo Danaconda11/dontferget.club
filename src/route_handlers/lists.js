@@ -4,6 +4,7 @@ const Wunderlist = require('wunderlist')
 const config = require('../config')
 const _ = require('lodash')
 const util = require('./util')
+const lists = require('../lists')
 let E = module.exports
 
 // wunderlist api "promises" don't behave like real promises should
@@ -112,29 +113,31 @@ E.get_all = util.http_handler(async (req, res, next) => {
 
 // TODO josh: extract mongo interaction into src/list.js
 E.get = util.http_handler(async (req, res, next) => {
-  let db = await mongo.connect()
-  res.json(await db.collection('lists').findOne({
-    list_id: req.params.list,
-    user_id: req.user._id,
-  }))
+  res.json(await lists.find_by_id(req.user._id, req.params.list))
 })
 
 // TODO josh: extract mongo interaction into src/list.js
 E.update = util.http_handler(async (req, res, next) => {
   let db = await mongo.connect()
   let update = _(req.body).toPairs()
-  .filter(([k]) => ['sort'].includes(k))
+  .filter(([k]) => [
+    'sort',
+    'sharing.public',
+    'sharing.private',
+  ].includes(k))
   .fromPairs()
   .value()
   if (_.isEmpty(update)) {
     return res.status(400).json({ error: 'Invalid update' })
   }
+  // TODO josh: create list if necessary on todo create so we don't need to
+  // lazy-create it here
+  if (!(await lists.find_by_id(req.user._id, req.params.list))) {
+    await lists.create({user_id: req.user._id, list_id: req.params.list})
+  }
   await db.collection('lists').update({
-    list_id: req.params.list,
     user_id: req.user._id,
-  }, {$set: update}, {upsert: true})
-  res.json(await db.collection('lists').findOne({
     list_id: req.params.list,
-    user_id: req.user._id,
-  }))
+  }, {$set: update})
+  res.json(await lists.find_by_id(req.user._id, req.params.list))
 })
