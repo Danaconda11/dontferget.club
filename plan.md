@@ -9,6 +9,13 @@ now:
 - debug 23s+ load times on app.js
 - lists with no active todos should be in a seperate "completed" sidebar section
 - show better drag preview on mobile
+- tests
+  - can register
+  - can log in
+  - can't log in with incorrect password
+  - can't view other people's list
+  - can view publically shared list
+  - can view privately shared list
 - (dan) properly handle 'all' when dragging todo items
 - (dan) remove from current list when dropping todo item
 - (dan) new page should show the pending list in the sidebar
