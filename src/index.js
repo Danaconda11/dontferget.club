@@ -38,13 +38,14 @@ app.get('/auth/wunderlist', passport.authenticate('wunderlist'))
 app.get('/auth/wunderlist/callback',
   passport.authenticate('wunderlist'),
   util.redirect('/account'))
-// TODO josh: configure list of urls that will send front end app
-app.get('/', files.send_file('index.html'))
-app.get('/todo/:todo', files.send_file('index.html'))
-app.get('/list/:list', files.send_file('index.html'))
-app.get('/list/:list/:todo', files.send_file('index.html'))
-app.get('/account', files.send_file('index.html'))
-// TODO josh: ^ configure list of urls that will send front end app
+let frontend_paths = `
+  /
+  /todo/:todo
+  /list/:list
+  /list/:list/:todo
+  /account
+`.split(/\s+/).filter(Boolean)
+frontend_paths.forEach(path => app.get(path.trim(), files.send_file('index.html')))
 app.get('/api/account', user.logged_in)
 app.get('/api/lists', lists.get_all)
 // TODO josh: migrate this to POST /api/lists?source=wunderlist to be more
