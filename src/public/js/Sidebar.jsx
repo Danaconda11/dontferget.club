@@ -7,15 +7,18 @@ import api from './api.js'
 import _ from 'lodash'
 import { CSSTransitionGroup } from 'react-transition-group'
 
-const render_nav_link = ({canDrop, isOver, connectDropTarget, list, active}) => connectDropTarget(
-  <div>
+const render_nav_link = ({canDrop, isOver, connectDropTarget, list, active}) => {
+  let element = 
+  (<div>
     <Link to={`/list/${list}`}
       className={'list' + (canDrop ? ' droppable' : '') +
         (isOver ? ' drop_hover' : '') + (active ? ' active' : '')}>
       {list}
     </Link>
-  </div>
-)
+  </div>)
+
+  return list == 'All' ? element : connectDropTarget( element )
+}
 
 const FakeNavLink = ({name}) => (
   <div className="list fake">{name}</div>
@@ -53,7 +56,7 @@ const SidebarList = DropTarget('todo', {
 }, (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),
   isOver: monitor.isOver(),
-  canDrop: monitor.canDrop(),
+  canDrop: monitor.canDrop()
 }))(render_nav_link)
 
 const ClearButton = DropTarget('todo', {
