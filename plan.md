@@ -6,16 +6,8 @@ legend:
 
 now:
 - better mobile styles
-- debug 23s+ load times on app.js
 - lists with no active todos should be in a seperate "completed" sidebar section
 - show better drag preview on mobile
-- tests
-  - can register
-  - can log in
-  - can't log in with incorrect password
-  - can't view other people's list
-  - can view publically shared list
-  - can view privately shared list
 - (dan) properly handle 'all' when dragging todo items
 - (dan) remove from current list when dropping todo item
 - (dan) new page should show the pending list in the sidebar
@@ -41,12 +33,21 @@ now:
 + (josh) review state stores
 + (josh) support links in todo title
 soonish:
-- (josh) enable babel-preset-env and compress production app.js
+- tests
+  - can register
+  - can log in
+  - can't log in with incorrect password
+  - can't view other people's list
+  - can view publically shared list
+  - can view privately shared list
 - (dan) better signup page
 - offline friendly progressive web app
 - better drag and drop UI
++ (josh) enable babel-preset-env and compress production app.js
 later:
+- nice initial onboarding list
 - support partial import from wunderlist with UI
+- prompt people to sign up from / import from wunderlist
 - support google keep import
 - extra auth:
   - google
