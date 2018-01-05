@@ -33,7 +33,6 @@
     "query-string": "^5.0.1",
     "react-select": "^1.1.0",
     "react-transition-group": "^1.2.1",
-    "request-promise": "^4.2.1",
     "serve-static": "^1.12.3",
     "valid-url": "^1.0.9",
     "wunderlist": "^0.1.3"
