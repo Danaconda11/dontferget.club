@@ -4,7 +4,6 @@ import Todo, {FakeTodo} from './Todo.jsx'
 // TODO josh: consider lazy-loading react-modal, react-toggle
 import Modal from 'react-modal'
 import Toggle from 'react-toggle'
-import 'react-toggle/style.css'
 import CopyUrl from './CopyUrl.jsx'
 
 export default class TodoList extends Component {

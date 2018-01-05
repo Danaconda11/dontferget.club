@@ -5,6 +5,9 @@ let E = module.exports
 E.find_by_object_id = _id => mongo.connect().then(db => {
   return db.collection('lists').findOne({_id})
 })
+E.find_by_uuid = uuid => mongo.connect().then(db => {
+  return db.collection('lists').findOne({uuid})
+})
 
 E.find_by_id = (user_id, list_id) => mongo.connect().then(db => {
   if (!user_id) {

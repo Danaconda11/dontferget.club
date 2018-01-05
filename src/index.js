@@ -1,3 +1,6 @@
+require('babel-register')({
+  extensions: ['.jsx'],
+})
 const express = require('express')
 const ms = require('ms')
 const config = require('./config')
@@ -12,10 +15,12 @@ const util = require('./route_handlers/util')
 const session = require('express-session')
 const compression = require('compression')
 const todos = require('./route_handlers/todos')
+const shared_list = require('./route_handlers/shared_list')
 
 let app = express()
 app.use(compression())
 app.use(files.static())
+app.get('/view/:token', shared_list)
 app.use(session({
   resave: false, saveUninitialized: false,
   secret: config.session_secret,
