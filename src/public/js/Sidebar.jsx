@@ -10,16 +10,16 @@ import { CSSTransitionGroup } from 'react-transition-group'
 const render_nav_link = ({canDrop, isOver, connectDropTarget, list, active,
   onSelect}) =>
 {
-  let element =
-  (<div>
-    <Link to={`/list/${list}`}
-      onClick={onSelect}
-      className={'list' + (canDrop ? ' droppable' : '') +
-        (isOver ? ' drop_hover' : '') + (active ? ' active' : '')}>
-      {list}
-    </Link>
-  </div>)
-
+  let element = (
+    <div>
+      <Link to={`/list/${list}`}
+        onClick={onSelect}
+        className={'list' + (canDrop ? ' droppable' : '') +
+          (isOver ? ' drop_hover' : '') + (active ? ' active' : '')}>
+        {list}
+      </Link>
+    </div>
+  )
   return list == 'All' ? element : connectDropTarget( element )
 }
 
