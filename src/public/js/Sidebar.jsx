@@ -7,10 +7,13 @@ import api from './api.js'
 import _ from 'lodash'
 import { CSSTransitionGroup } from 'react-transition-group'
 
-const render_nav_link = ({canDrop, isOver, connectDropTarget, list, active}) => {
-  let element = 
+const render_nav_link = ({canDrop, isOver, connectDropTarget, list, active,
+  onSelect}) =>
+{
+  let element =
   (<div>
     <Link to={`/list/${list}`}
+      onClick={onSelect}
       className={'list' + (canDrop ? ' droppable' : '') +
         (isOver ? ' drop_hover' : '') + (active ? ' active' : '')}>
       {list}
@@ -132,7 +135,8 @@ class Sidebar extends Component {
         </div>
         <div className={`lists ${!open ? 'd-none' : ''} d-sm-block`}>
           {lists.map(list =>
-            <SidebarList key={list} list={list} active={list === current}/>)}
+            <SidebarList key={list} list={list} active={list === current}
+              onSelect={() => this.setState({open: false})}/>)}
           <ClearButton/>
           <form className="input-group" onSubmit={this.navigate_new}>
             <input name="new_list" className="form-control form-control-sm"
