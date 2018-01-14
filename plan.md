@@ -14,7 +14,7 @@ now:
 - (dan) counter next to each list
 - (dan) alphabetize lists
 - (dan) new page should clear todo list
-* (josh) supprt read only lists
+* (josh) support read only lists
   * public
   - private
 - (josh) support sublists
