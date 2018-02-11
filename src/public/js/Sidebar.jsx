@@ -110,7 +110,7 @@ class Sidebar extends Component {
       if (b === 'All') {
         return 1
       }
-      return 0
+      return a < b ? -1 : 1
     })
     let {open} = this.state
     let loading = !lists.length
