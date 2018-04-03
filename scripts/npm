@@ -1,2 +1,7 @@
 #!/usr/bin/env bash
-docker exec www.dontferget.club npm $@
+set -ue
+eval $(docker-machine env -u)
+docker run -it --rm \
+  -w /app \
+  -v $PWD/src:/app \
+  node:9.2 npm $@
