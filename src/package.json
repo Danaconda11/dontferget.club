@@ -23,7 +23,6 @@
     "express": "^4.15.3",
     "express-session": "^1.15.3",
     "express-static": "^1.2.4",
-    "lichess-api": "^1.0.2",
     "lodash": "^4.17.4",
     "mailparser": "^2.1.0",
     "mongodb": "^3.0.0-rc0",
