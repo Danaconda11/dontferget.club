@@ -139,9 +139,8 @@ E.get_all = util.http_handler(async (req, res, next) => {
   res.json(await lists.find_all({user_id: req.user._id}))
 })
 
-// TODO josh: extract mongo interaction into src/list.js
 E.get = util.http_handler(async (req, res, next) => {
-  res.json(await lists.find_by_id(req.user._id, req.params.list))
+  res.json(await lists.find_by_name(req.user._id, req.params.list))
 })
 
 // TODO josh: extract mongo interaction into src/list.js
@@ -155,17 +154,12 @@ E.update = util.http_handler(async (req, res, next) => {
   if (_.isEmpty(update)) {
     return res.status(400).json({error: 'Invalid update'})
   }
-  // TODO josh: create list if necessary on todo create so we don't need to
-  // lazy-create it here
-  if (!await lists.find_by_id(req.user._id, req.params.list)) {
-    await lists.create({user_id: req.user._id, list_id: req.params.list})
-  }
   await db.collection('lists').update(
     {
       user_id: req.user._id,
-      list_id: req.params.list,
+      name: req.params.list,
     },
     {$set: update},
   )
-  res.json(await lists.find_by_id(req.user._id, req.params.list))
+  res.json(await lists.find_by_name(req.user._id, req.params.list))
 })

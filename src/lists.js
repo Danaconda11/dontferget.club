@@ -28,18 +28,6 @@ E.find_by_uuid = uuid =>
     return db.collection('lists').findOne({uuid})
   })
 
-// TODO josh: check if used
-E.find_by_id = (user_id, list_id) =>
-  mongo.connect().then(db => {
-    if (!user_id) {
-      throw new Error('missing user_id')
-    }
-    if (!list_id) {
-      throw new Error('missing list_id')
-    }
-    return db.collection('lists').findOne({list_id, user_id})
-  })
-
 E.find_by_name = (user_id, name) =>
   mongo.connect().then(db => {
     if (!user_id) {
