@@ -14,7 +14,12 @@ class TodoApp extends Component {
   constructor(props) {
     super(props)
     // TODO josh: state.lists should be an array of list objects
-    this.state = {todos: [], lists: [], focused_todo: null, focused_list: null}
+    this.state = {
+      todos: [],
+      lists: [],
+      focused_todo: null,
+      focused_list: null,
+    }
     this.create_todo = this.create_todo.bind(this)
     this.on_todo_update = this.on_todo_update.bind(this)
     this.on_list_update = this.on_list_update.bind(this)

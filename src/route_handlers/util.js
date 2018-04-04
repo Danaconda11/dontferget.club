@@ -9,7 +9,7 @@ E.redirect = path => {
 E.http_handler = fn => {
   return async (req, res, next) => {
     try {
-      await fn(req, res,  next)
+      await fn(req, res, next)
     } catch (e) {
       next(e)
     }
@@ -17,9 +17,13 @@ E.http_handler = fn => {
 }
 
 E.auto_login = (req, res, next) => {
-  users.find_one({username: 'josh'}).then(user => {
-    return util.promisify(req.login.bind(req))(user)
-  }).then(() => {
-    next()
-  }).catch(next)
+  users
+    .find_one({username: 'josh'})
+    .then(user => {
+      return util.promisify(req.login.bind(req))(user)
+    })
+    .then(() => {
+      next()
+    })
+    .catch(next)
 }

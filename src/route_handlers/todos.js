@@ -30,26 +30,34 @@ E.get_all = util.http_handler(async (req, res, next) => {
 
 E.update = (req, res, next) => {
   let id = req.params.id
-  let update = _(req.body).toPairs()
-  .filter(([k]) => ['notes', 'title', 'completed', 'list'].includes(k))
-  .fromPairs()
-  .value()
+  let update = _(req.body)
+    .toPairs()
+    .filter(([k]) => ['notes', 'title', 'completed', 'list'].includes(k))
+    .fromPairs()
+    .value()
   if (!id || _.isEmpty(update)) {
-    return res.status(400).json({ error: 'Invalid update' })
+    return res.status(400).json({error: 'Invalid update'})
   }
-  return todos.update(id, update).then(result => {
-    return todos.find_by_id(id)
-  }).then(todo => {
-    res.json(todo)
-  }).catch(err => {
-    next(err)
-  })
+  return todos
+    .update(id, update)
+    .then(result => {
+      return todos.find_by_id(id)
+    })
+    .then(todo => {
+      res.json(todo)
+    })
+    .catch(err => {
+      next(err)
+    })
 }
 
 E.remove = (req, res, next) => {
-  return todos.remove(req.params.id).then(result => {
-    res.json(result)
-  }).catch(err => {
-    next(err)
-  })
+  return todos
+    .remove(req.params.id)
+    .then(result => {
+      res.json(result)
+    })
+    .catch(err => {
+      next(err)
+    })
 }
