@@ -7,7 +7,7 @@ import _ from 'lodash'
 const {assign} = Object
 
 export default class TodoEditor extends Component {
-  save (update) {
+  save(update) {
     let {todo} = this.props
     this.props.onUpdate(todo._id, assign({}, todo, update))
   }
@@ -17,8 +17,11 @@ export default class TodoEditor extends Component {
       <div className="todo_editor card">
         <div className="card-body">
           <div className="card-title">
-            <PrettyInput value={todo.title} oneLine={true}
-              onChange={v => this.save({title: v})}>
+            <PrettyInput
+              value={todo.title}
+              oneLine={true}
+              onChange={v => this.save({title: v})}
+            >
               <h4>{todo.title}</h4>
             </PrettyInput>
           </div>

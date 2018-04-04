@@ -14,13 +14,15 @@ class TodoApp extends Component {
   constructor(props) {
     super(props)
     // TODO josh: state.lists should be an array of list objects
-    this.state = {todos: [],  lists: [], focused_todo: null, focused_list: null}
+    this.state = {todos: [], lists: [], focused_todo: null, focused_list: null}
     this.create_todo = this.create_todo.bind(this)
     this.on_todo_update = this.on_todo_update.bind(this)
     this.on_list_update = this.on_list_update.bind(this)
     this.on_sort = this.on_sort.bind(this)
   }
-  list (props) { return (props || this.props).match.params.list }
+  list(props) {
+    return (props || this.props).match.params.list
+  }
   async get_todos() {
     this.setState({todos_loading: true})
     try {
@@ -45,7 +47,7 @@ class TodoApp extends Component {
       console.error(e)
     }
   }
-  async load_focused_todo (id) {
+  async load_focused_todo(id) {
     try {
       let todo = await (await api_request(`/todos/${id}`)).json()
       this.setState({focused_todo: todo})
@@ -53,10 +55,13 @@ class TodoApp extends Component {
       console.error(e)
     }
   }
-  async on_todo_update (id, update) {
+  async on_todo_update(id, update) {
     let list = this.list()
     try {
-      let res = await api_request(`/todos/${id}`, {method: 'PATCH', body: update})
+      let res = await api_request(`/todos/${id}`, {
+        method: 'PATCH',
+        body: update,
+      })
       if (res.status !== 200) {
         throw new Error('Not updated correctly')
       }
@@ -65,7 +70,8 @@ class TodoApp extends Component {
       this.setState(prev => {
         let focused = prev.focused_todo
         return assign({}, prev, {
-          todos: prev.todos.map(_todo => _todo._id !== todo._id ? _todo : todo)
+          todos: prev.todos
+            .map(_todo => (_todo._id !== todo._id ? _todo : todo))
             .filter(todo => todo.list.includes(list)),
           focused_todo: focused && focused._id === todo._id ? todo : focused,
         })
@@ -75,10 +81,12 @@ class TodoApp extends Component {
       console.error(e)
     }
   }
-  async create_list (name) {
+  async create_list(name) {
     try {
-      let list = await (await api_request('/lists',
-        {method: 'POST', body: {name}})).json()
+      let list = await (await api_request('/lists', {
+        method: 'POST',
+        body: {name},
+      })).json()
       this.props.history.push(`/list/${name}`)
       this.setState(prev => {
         prev.lists = prev.lists.concat(list.name)
@@ -90,29 +98,34 @@ class TodoApp extends Component {
     }
   }
   // TODO josh: merge into on_list_update
-  async on_sort (todo, new_index) {
+  async on_sort(todo, new_index) {
     try {
       let todos = this.state.todos
-      todos = todos.map(t => t._id === todo._id ? null : t)
+      todos = todos.map(t => (t._id === todo._id ? null : t))
       todos = [
         ...todos.slice(0, new_index),
         assign({}, todo),
         ...todos.slice(new_index),
       ]
       let sort = todos.filter(Boolean).map(t => t._id)
-      let list = await (await api_request(`/lists/${this.list()}`,
-        {method: 'PATCH', body: {sort}})).json()
+      let list = await (await api_request(`/lists/${this.list()}`, {
+        method: 'PATCH',
+        body: {sort},
+      })).json()
       this.setState({focused_list: this._normalize_list(list)})
       // TODO josh: notify an alert service instead of just logging to console
     } catch (e) {
       console.error(e)
     }
   }
-  _normalize_list (data) {
-    return assign({
-      name: this.list(),
-      sharing: {public: false, private: false},
-    }, data || {})
+  _normalize_list(data) {
+    return assign(
+      {
+        name: this.list(),
+        sharing: {public: false, private: false},
+      },
+      data || {},
+    )
   }
   componentDidMount() {
     this.get_todos()
@@ -133,7 +146,10 @@ class TodoApp extends Component {
   }
   async create_todo(body) {
     try {
-      let todo = await (await api_request('/todos', {method: 'POST', body})).json()
+      let todo = await (await api_request('/todos', {
+        method: 'POST',
+        body,
+      })).json()
       this.setState(prev => {
         return assign({}, prev, {
           todos: [todo].concat(prev.todos),
@@ -144,9 +160,11 @@ class TodoApp extends Component {
       console.error(e)
     }
   }
-  async on_list_update (id, update) {
-    let list = await (await api_request(`/lists/${id}`,
-      {method: 'PATCH', body: update})).json()
+  async on_list_update(id, update) {
+    let list = await (await api_request(`/lists/${id}`, {
+      method: 'PATCH',
+      body: update,
+    })).json()
     this.setState({focused_list: list})
   }
   render() {
@@ -159,7 +177,8 @@ class TodoApp extends Component {
           <SideBar
             current={this.props.match.params.list}
             lists={lists}
-            onCreateList={name => this.create_list(name)}/>
+            onCreateList={name => this.create_list(name)}
+          />
         </div>
         <div className="col-sm">
           <TodoList
@@ -170,13 +189,24 @@ class TodoApp extends Component {
             onTodoCreate={this.create_todo}
             onTodoUpdate={this.on_todo_update}
             onListUpdate={this.on_list_update}
-            onSort={this.on_sort}/>
+            onSort={this.on_sort}
+          />
         </div>
-        <Route path="/list/:list/:todo" render={() =>
-          <div className="col-md-4">
-            {focused_todo ? <TodoEditor todo={focused_todo}
-              onUpdate={this.on_todo_update}/> : <p>Loading...</p>}
-          </div>}/>
+        <Route
+          path="/list/:list/:todo"
+          render={() => (
+            <div className="col-md-4">
+              {focused_todo ? (
+                <TodoEditor
+                  todo={focused_todo}
+                  onUpdate={this.on_todo_update}
+                />
+              ) : (
+                <p>Loading...</p>
+              )}
+            </div>
+          )}
+        />
       </div>
     )
   }

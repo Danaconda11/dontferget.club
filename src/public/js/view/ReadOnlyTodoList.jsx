@@ -5,7 +5,7 @@ import TodoList from '../TodoList.jsx'
 export default function ReadOnlyTodoList({list, todos, url}) {
   return (
     <StaticRouter location={url} context={{}}>
-      <TodoList list={list} todos={todos}/>
+      <TodoList list={list} todos={todos} />
     </StaticRouter>
   )
 }
