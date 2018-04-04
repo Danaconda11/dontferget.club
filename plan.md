@@ -20,6 +20,8 @@ now:
 - (josh) support sublists
 - (josh) allow removing list from todo on mobile
 - (josh) support links in todo body
+- (josh) enable queue-based list view
+- (josh) enable recurring todo items
 ? (josh) when viewing list, filter out labels for current list
 + (josh) re-order todos in list
 + (josh) make drag and drop work on mobile
@@ -43,8 +45,6 @@ soonish:
 - (dan) better signup page
 - offline friendly progressive web app
 - better drag and drop UI
-- (josh) enable queue-based list view
-- (josh) enable recurring todo items
 - (josh) add ./hooks and ./scripts/install-hooks
 + (josh) enable babel-preset-env and compress production app.js
 later:
