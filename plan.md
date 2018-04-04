@@ -6,7 +6,6 @@ legend:
 
 now:
 - better mobile styles
-- lists with no active todos should be in a seperate "completed" sidebar section
 - show better drag preview on mobile
 - (dan) properly handle 'all' when dragging todo items
 - (dan) remove from current list when dropping todo item
@@ -23,17 +22,6 @@ now:
 - (josh) enable queue-based list view
 - (josh) enable recurring todo items
 ? (josh) when viewing list, filter out labels for current list
-+ (josh) re-order todos in list
-+ (josh) make drag and drop work on mobile
-+ (josh) remove from list when removing list tag
-+ (josh) show faded dummy content while loading
-+ (josh) allow removing lists with button
-+ (josh) mvp mobile styles
-+ (josh) improve single todo editor styles
-+ (josh) todos must have some content
-+ (josh) remove chess page
-+ (josh) review state stores
-+ (josh) support links in todo title
 soonish:
 - tests
   - can register
