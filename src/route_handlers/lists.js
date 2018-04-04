@@ -135,16 +135,8 @@ E.import = (req, res, next) =>
     })
   })
 
-// TODO josh: merge in metadata info from 'lists' collection
-// TODO josh: extract mongo interaction into src/list.js
 E.get_all = util.http_handler(async (req, res, next) => {
-  let db = await mongo.connect()
-  let lists = await db
-    .collection('todos')
-    .distinct('list', {user_id: req.user._id})
-  lists.unshift('Inbox')
-  lists.push('All')
-  res.json(_.uniq(lists))
+  res.json(await lists.find_all({user_id: req.user._id}))
 })
 
 // TODO josh: extract mongo interaction into src/list.js

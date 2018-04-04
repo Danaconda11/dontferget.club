@@ -28,6 +28,7 @@ E.find_by_uuid = uuid =>
     return db.collection('lists').findOne({uuid})
   })
 
+// TODO josh: check if used
 E.find_by_id = (user_id, list_id) =>
   mongo.connect().then(db => {
     if (!user_id) {
@@ -39,6 +40,18 @@ E.find_by_id = (user_id, list_id) =>
     return db.collection('lists').findOne({list_id, user_id})
   })
 
+E.find_by_name = (user_id, name) =>
+  mongo.connect().then(db => {
+    if (!user_id) {
+      throw new Error('missing user_id')
+    }
+    if (!name) {
+      throw new Error('missing name')
+    }
+    return db.collection('lists').findOne({name, user_id})
+  })
+
+// TODO josh: remove all similar examples of connect().then()
 E.create = data =>
   mongo.connect().then(async db => {
     data = Object.assign(
@@ -58,3 +71,8 @@ E.create = data =>
     let insert = await db.collection('lists').insertOne(data)
     return await E.find_by_object_id(insert.insertedId)
   })
+
+E.find_all = async query => {
+  let db = await mongo.connect()
+  return await db.collection('lists').find(query).toArray()
+}

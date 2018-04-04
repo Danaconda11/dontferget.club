@@ -13,7 +13,6 @@ const {assign} = Object
 class TodoApp extends Component {
   constructor(props) {
     super(props)
-    // TODO josh: state.lists should be an array of list objects
     this.state = {
       todos: [],
       lists: [],
@@ -94,7 +93,7 @@ class TodoApp extends Component {
       })).json()
       this.props.history.push(`/list/${name}`)
       this.setState(prev => {
-        prev.lists = prev.lists.concat(list.name)
+        prev.lists = prev.lists.concat(list)
         return prev
       })
       return list
@@ -156,10 +155,7 @@ class TodoApp extends Component {
         body,
       })).json()
       this.setState(prev => {
-        return assign({}, prev, {
-          todos: [todo].concat(prev.todos),
-          lists: _.uniq(prev.lists.concat(todo.list).filter(Boolean)),
-        })
+        return assign({}, prev, {todos: [todo].concat(prev.todos)})
       })
     } catch (e) {
       console.error(e)

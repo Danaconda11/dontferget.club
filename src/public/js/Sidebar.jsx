@@ -16,7 +16,7 @@ const render_nav_link = ({
   let element = (
     <div>
       <Link
-        to={`/list/${list}`}
+        to={`/list/${list.name}`}
         onClick={onSelect}
         className={
           'list' +
@@ -25,7 +25,7 @@ const render_nav_link = ({
           (active ? ' active' : '')
         }
       >
-        {list}
+        {list.name}
       </Link>
     </div>
   )
@@ -115,19 +115,19 @@ export default class Sidebar extends Component {
     let {lists, current} = this.props
     let {new_list} = this.state
     lists = lists.slice().sort((a, b) => {
-      if (a === 'Inbox') {
+      if (a.name === 'Inbox') {
         return -1
       }
-      if (b === 'Inbox') {
+      if (b.name === 'Inbox') {
         return 1
       }
-      if (a === 'All') {
+      if (a.name === 'All') {
         return -1
       }
-      if (b === 'All') {
+      if (b.name === 'All') {
         return 1
       }
-      return a < b ? -1 : 1
+      return a.name < b.name ? -1 : 1
     })
     let {open} = this.state
     let loading = !lists.length
