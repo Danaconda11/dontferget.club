@@ -43,6 +43,9 @@ soonish:
 - (dan) better signup page
 - offline friendly progressive web app
 - better drag and drop UI
+- (josh) enable queue-based list view
+- (josh) enable recurring todo items
+- (josh) add ./hooks and ./scripts/install-hooks
 + (josh) enable babel-preset-env and compress production app.js
 later:
 - nice initial onboarding list
