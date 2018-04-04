@@ -1,8 +1,8 @@
 module.exports = {
-  context: __dirname+'/public/js',
+  context: __dirname + '/public/js',
   entry: './index.jsx',
   output: {
-    path: __dirname+'/public/js',
+    path: __dirname + '/public/js',
     filename: 'app.js',
   },
   module: {

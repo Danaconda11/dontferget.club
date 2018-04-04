@@ -11,7 +11,7 @@ const process_message = async (pipe, message) => {
       user_id: message.user_id,
       title: mail.subject.trim(),
       notes: mail.text.trim(),
-      list: ['Inbox']
+      list: ['Inbox'],
     }
     await todos.insert(todo)
   } catch (e) {
@@ -21,8 +21,9 @@ const process_message = async (pipe, message) => {
 
 E.add = async (user, email) => {
   let client = await mongo.connect()
-  return await client.collection('incoming_emails')
-  .insert({user_id: user._id, body: email})
+  return await client
+    .collection('incoming_emails')
+    .insert({user_id: user._id, body: email})
 }
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
@@ -32,10 +33,15 @@ const _watch = async pipe => {
     // TODO josh: add debug log line like "checking for messages"
     await mongo.connect().then(async client => {
       let incoming = client.collection('incoming_emails')
-      let messages = await incoming.find({processed_at: {$exists: false}}).toArray()
+      let messages = await incoming
+        .find({processed_at: {$exists: false}})
+        .toArray()
       for (let message of messages) {
         await process_message(pipe, message)
-        await incoming.update({_id: message._id}, {$set: {processed_at: new Date()}})
+        await incoming.update(
+          {_id: message._id},
+          {$set: {processed_at: new Date()}},
+        )
       }
     })
     await sleep(1e3)

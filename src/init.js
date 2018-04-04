@@ -6,10 +6,15 @@ const bcrypt = require('bcrypt')
 let create_dummy_records = async () => {
   let db = await mongo.connect()
   await db.createCollection('test')
-  await db.collection('test').insertOne({title : 'test', completed : false})
+  await db.collection('test').insertOne({title: 'test', completed: false})
   let password = await bcrypt.hash('password', 1)
-  await db.collection('users').update({username: 'josh'},
-    {$set: {email: 'user@dontferget.club', password}}, {upsert: true})
+  await db
+    .collection('users')
+    .update(
+      {username: 'josh'},
+      {$set: {email: 'user@dontferget.club', password}},
+      {upsert: true},
+    )
 }
 
 module.exports = async () => {
