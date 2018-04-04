@@ -37,28 +37,29 @@ let promise_map = (array, fn) => {
 }
 
 // TODO josh: move to src/import/wunderlist.js
-let sync_wunderlist = user =>
-  mongo.connect().then(db => {
-    let api = new Wunderlist({
-      accessToken: _.get(user, 'external.wunderlist.access_token'),
-      clientID: config.wunderlist.client_id,
-    })
-    return real_promise(api.http.lists.all())
-      .then(lists => {
-        return promise_map(lists, list => {
-          return sync_list(api, user, list)
-        })
-      })
-      .then(lists => {
-        return lists.reduce(
-          (state, i) => {
-            state.items += i.items.length
-            return state
-          },
-          {lists: lists.length, items: 0},
-        )
-      })
+let sync_wunderlist = async user => {
+  let db = await mongo.connect()
+  let api = new Wunderlist({
+    accessToken: _.get(user, 'external.wunderlist.access_token'),
+    clientID: config.wunderlist.client_id,
   })
+  // TODO josh: flatten
+  return real_promise(api.http.lists.all())
+    .then(lists => {
+      return promise_map(lists, list => {
+        return sync_list(api, user, list)
+      })
+    })
+    .then(lists => {
+      return lists.reduce(
+        (state, i) => {
+          state.items += i.items.length
+          return state
+        },
+        {lists: lists.length, items: 0},
+      )
+    })
+}
 
 let sync_list = (api, user, list) => {
   return real_promise(api.http.tasks.forList(list.id)).then(tasks => {
@@ -112,28 +113,28 @@ E.add = util.http_handler(async (req, res) => {
   res.status(201).json(await lists.create(list))
 })
 
-E.import = (req, res, next) =>
-  mongo.connect().then(db => {
-    return users.find_one({username: req.user.username}).then(user => {
-      let token = _.get(user, 'external.wunderlist.access_token')
-      if (!token) {
-        return res.status(401).json({
-          error: 'Not authenticated with wunderlist',
+E.import = async (req, res, next) => {
+  let db = await mongo.connect()
+  return await users.find_one({username: req.user.username}).then(user => {
+    let token = _.get(user, 'external.wunderlist.access_token')
+    if (!token) {
+      return res.status(401).json({
+        error: 'Not authenticated with wunderlist',
+      })
+    }
+    return sync_wunderlist(user)
+      .then(sync => {
+        res.status(201).json({sync})
+      })
+      .catch(err => {
+        console.error(err)
+        res.status(500).json({
+          error: err.message,
+          stack: err.stack,
         })
-      }
-      return sync_wunderlist(user)
-        .then(sync => {
-          res.status(201).json({sync})
-        })
-        .catch(err => {
-          console.error(err)
-          res.status(500).json({
-            error: err.message,
-            stack: err.stack,
-          })
-        })
-    })
+      })
   })
+}
 
 E.get_all = util.http_handler(async (req, res, next) => {
   res.json(await lists.find_all({user_id: req.user._id}))

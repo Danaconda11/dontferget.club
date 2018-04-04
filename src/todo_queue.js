@@ -31,19 +31,18 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 const _watch = async pipe => {
   while (true) {
     // TODO josh: add debug log line like "checking for messages"
-    await mongo.connect().then(async client => {
-      let incoming = client.collection('incoming_emails')
-      let messages = await incoming
-        .find({processed_at: {$exists: false}})
-        .toArray()
-      for (let message of messages) {
-        await process_message(pipe, message)
-        await incoming.update(
-          {_id: message._id},
-          {$set: {processed_at: new Date()}},
-        )
-      }
-    })
+    let client = await mongo.connect()
+    let incoming = client.collection('incoming_emails')
+    let messages = await incoming
+      .find({processed_at: {$exists: false}})
+      .toArray()
+    for (let message of messages) {
+      await process_message(pipe, message)
+      await incoming.update(
+        {_id: message._id},
+        {$set: {processed_at: new Date()}},
+      )
+    }
     await sleep(1e3)
   }
 }
