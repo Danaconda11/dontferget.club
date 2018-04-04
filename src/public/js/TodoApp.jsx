@@ -1,4 +1,6 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
+import {withRouter} from 'react-router'
 import {Route, Link} from 'react-router-dom'
 import SideBar from './Sidebar.jsx'
 import TodoList from './TodoList.jsx'
@@ -8,9 +10,10 @@ import qs from 'query-string'
 import {cloneDeep, each, set} from 'lodash'
 const {assign} = Object
 
-export default class TodoApp extends Component {
+class TodoApp extends Component {
   constructor(props) {
     super(props)
+    // TODO josh: state.lists should be an array of list objects
     this.state = {todos: [],  lists: [], focused_todo: null, focused_list: null}
     this.create_todo = this.create_todo.bind(this)
     this.on_todo_update = this.on_todo_update.bind(this)
@@ -72,10 +75,19 @@ export default class TodoApp extends Component {
       console.error(e)
     }
   }
-  async on_new_list (list) {
-    this.setState(prev => {
-      return assign({}, prev, {todos: []})
-    })
+  async create_list (name) {
+    try {
+      let list = await (await api_request('/lists',
+        {method: 'POST', body: {name}})).json()
+      this.props.history.push(`/list/${name}`)
+      this.setState(prev => {
+        prev.lists = prev.lists.concat(list.name)
+        return prev
+      })
+      return list
+    } catch (e) {
+      console.error(e)
+    }
   }
   // TODO josh: merge into on_list_update
   async on_sort (todo, new_index) {
@@ -147,7 +159,7 @@ export default class TodoApp extends Component {
           <SideBar
             current={this.props.match.params.list}
             lists={lists}
-            onNewList={list => this.on_new_list(list)}/>
+            onCreateList={name => this.create_list(name)}/>
         </div>
         <div className="col-sm">
           <TodoList
@@ -169,3 +181,5 @@ export default class TodoApp extends Component {
     )
   }
 }
+TodoApp.propTypes = {history: PropTypes.object}
+export default withRouter(TodoApp)

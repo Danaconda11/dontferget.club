@@ -80,6 +80,15 @@ let sync_list = (api, user, list) => {
   })
 }
 
+E.add = util.http_handler(async (req, res) => {
+  let errors = lists.validate(req.body)
+  if (errors) {
+    return res.status(400).json({message: "Couldn't create list", errors})
+  }
+  let list = Object.assign(req.body, {user_id: req.user._id})
+  res.status(201).json(await lists.create(list))
+})
+
 E.import = (req, res, next) => mongo.connect().then(db => {
   return users.find_one({username: req.user.username}).then(user => {
     let token = _.get(user, 'external.wunderlist.access_token')

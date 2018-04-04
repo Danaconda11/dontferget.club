@@ -1,6 +1,5 @@
-require('babel-register')({
-  extensions: ['.jsx'],
-})
+// TODO josh: decide on a way to avoid babel-ing the whole app
+require('babel-register')({extensions: ['.jsx']})
 const express = require('express')
 const ms = require('ms')
 const config = require('./config')
@@ -53,9 +52,10 @@ let frontend_paths = `
 frontend_paths.forEach(path => app.get(path.trim(), files.send_file('index.html')))
 app.get('/api/account', user.logged_in)
 app.get('/api/lists', lists.get_all)
-// TODO josh: migrate this to POST /api/lists?source=wunderlist to be more
+// TODO josh: migrate this to POST /api/lists?source=wunderlist to be
 // REST compilant
 app.post('/api/lists/import', lists.import)
+app.post('/api/lists', lists.add)
 app.get('/api/lists/:list', lists.get)
 app.patch('/api/lists/:list', lists.update)
 app.get('/api/lists/:list/todos', todos.get_all)

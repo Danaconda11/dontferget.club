@@ -1,8 +1,6 @@
 import React, {Component} from 'react'
 import {NavLink, Link} from 'react-router-dom'
-import {withRouter} from 'react-router'
 import {DropTarget} from 'react-dnd'
-import PropTypes from 'prop-types'
 import api from './api.js'
 import _ from 'lodash'
 import { CSSTransitionGroup } from 'react-transition-group'
@@ -74,25 +72,21 @@ const ClearButton = DropTarget('todo', {
   canDrop: monitor.canDrop(),
 }))(render_clear)
 
-class Sidebar extends Component {
+export default class Sidebar extends Component {
   constructor (props) {
     super(props)
     this.state = {new_list: '', open: false}
-    this.navigate_new = this.navigate_new.bind(this)
+    this.create_list = this.create_list.bind(this)
   }
   on_change (e) {
     let {target} = e
     this.setState({[target.name]: target.value})
   }
-  navigate_new (e) {
+  async create_list (e) {
     e.preventDefault()
-    let list = this.state.new_list
-    this.setState({new_list: '', open: false}, () => {
-      // HACK josh: TodoApp should do the navigate, but I'm having trouble with
-      // e.preventDefault() and react synthetic events for onSubmit
-      this.props.history.push(`/list/${list}`)
-      this.props.onNewList(list)
-    })
+    if (await this.props.onCreateList(this.state.new_list)) {
+      this.setState({new_list: '', open: false})
+    }
   }
   render() {
     let {lists, current} = this.props
@@ -138,7 +132,7 @@ class Sidebar extends Component {
             <SidebarList key={list} list={list} active={list === current}
               onSelect={() => this.setState({open: false})}/>)}
           <ClearButton/>
-          <form className="input-group" onSubmit={this.navigate_new}>
+          <form className="input-group" onSubmit={this.create_list}>
             <input name="new_list" className="form-control form-control-sm"
               value={new_list} onChange={e=>this.on_change(e)}
               placeholder="New list"/>
@@ -154,8 +148,3 @@ class Sidebar extends Component {
     )
   }
 }
-Sidebar.propTypes = {
-  history: PropTypes.object.isRequired,
-}
-
-export default withRouter(Sidebar)

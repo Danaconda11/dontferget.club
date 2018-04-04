@@ -2,6 +2,23 @@ const mongo = require('./mongo')
 const uuid = require('uuid')
 let E = module.exports
 
+E.validate = list => {
+  let errors = []
+  // TODO josh: move all list validation here
+  let allowed_fields = `name`.split(/\s+/)
+  for (let [field, value] of Object.entries(list)) {
+    if (allowed_fields.includes(field)) {
+      continue
+    }
+    errors.push({message: `Unknown field: ${field}`, field})
+  }
+  return errors.length ? errors : undefined
+}
+// TODO josh: finish
+E.validate_update = (list, update) => {
+  throw new Error('Not implemented yet')
+}
+
 E.find_by_object_id = _id => mongo.connect().then(db => {
   return db.collection('lists').findOne({_id})
 })
@@ -28,6 +45,9 @@ E.create = data => mongo.connect().then(async db => {
     // name
     name: data.list_id,
   }, data)
+  if (!data.user_id) {
+    throw new Error('A list must have a user_id')
+  }
   let insert = await db.collection('lists').insertOne(data)
   return await E.find_by_object_id(insert.insertedId)
 })
