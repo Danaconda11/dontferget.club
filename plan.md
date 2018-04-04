@@ -55,7 +55,7 @@ later:
 - extra auth:
   - google
   - twitter
-  - github (can we have nice github integration? issues perhaps?)
+  - github
   - reddit?
 - change password
 - setting to change sort order of lists
