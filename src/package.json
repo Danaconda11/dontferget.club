@@ -10,6 +10,9 @@
     "haraka": "haraka -c haraka",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "husky": {
+    "pre-commit": "prettier --write **/*.js **/*.jsx"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -45,7 +48,9 @@
     "babel-preset-react": "^6.24.1",
     "concurrently": "^3.5.0",
     "css-loader": "^0.28.7",
+    "husky": "^0.14.3",
     "nodemon": "^1.11.0",
+    "prettier": "^1.11.1",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-dnd": "^2.5.4",
