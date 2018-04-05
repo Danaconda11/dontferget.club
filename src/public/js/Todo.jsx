@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import {DragSource, DropTarget} from 'react-dnd'
 import {isWebUri} from 'valid-url'
 import {withRouter} from 'react-router-dom'
+import PopupCard from './PopupCard.jsx'
 import _ from 'lodash'
 
 // TODO josh: split GhostTodo out of Todo
@@ -25,7 +26,10 @@ function Todo({
   }
   let lists = _.uniq(todo.list || [])
   const navigate = e => {
-    if (['INPUT', 'I', 'A'].includes(e.target.nodeName)) {
+    if (
+      ['INPUT', 'I', 'A'].includes(e.target.nodeName) ||
+      e.target.classList.includes('backdrop')
+    ) {
       return
     }
     history.push(`/list/${list}/${todo._id}`)
@@ -71,6 +75,12 @@ function Todo({
             </Link>
           ))}
         </div>
+        <PopupCard
+          render={<i className="fa fa-ellipsis-v actions" />}
+          align="right"
+        >
+          <div className="option">Delete</div>
+        </PopupCard>
       </li>,
     ),
   )
